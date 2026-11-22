@@ -407,14 +407,17 @@ function beep(f,d=0.08,type='triangle',v=0.08,slide=0){
 }
 const SFX={};
 ['meow','trill','hiss','ceramic','glass','thud','pan','tree','key','purr','steps','spray'].forEach(n=>{try{fetch('s/'+n+'.mp3').then(r=>r.ok?r.arrayBuffer():Promise.reject()).then(b=>{SFX[n]={raw:b}}).catch(()=>{})}catch(e){}});
-function warm(){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();
-  for(const n in SFX){const s=SFX[n];if(s.raw&&!s.dec){s.dec=true;AC.decodeAudioData(s.raw.slice(0)).then(b=>{s.buf=b}).catch(()=>{})}}}catch(e){}}
+function warm(){try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
+  try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state!=='running')AC.resume();
+  if(!warm.done){warm.done=1;const sb=AC.createBufferSource();sb.buffer=AC.createBuffer(1,1,22050);sb.connect(AC.destination);sb.start(0)}
+  for(const n in SFX){const s=SFX[n];if(s.raw&&!s.dec){s.dec=true;const pr=AC.decodeAudioData(s.raw.slice(0),b=>{s.buf=b},()=>{s.dec=false});if(pr&&pr.catch)pr.catch(()=>{})}}}catch(e){}}
 function sfx(n,vol=.6,rate=1){if(!S.sound)return true;const s=SFX[n];if(!s||!s.buf||!AC)return false;
   try{const src=AC.createBufferSource(),g=AC.createGain();src.buffer=s.buf;src.playbackRate.value=rate;g.gain.value=vol;src.connect(g).connect(AC.destination);src.start();return true}catch(e){return false}}
 let musicEl=null;
 function music(){try{if(!musicEl){musicEl=new Audio('s/music.mp3');musicEl.loop=true;musicEl.volume=.28}
   if(S.music&&!document.hidden){const p=musicEl.play();if(p&&p.catch)p.catch(()=>{})}else musicEl.pause()}catch(e){}}
-document.addEventListener('visibilitychange',music);
+document.addEventListener('visibilitychange',()=>{if(musicEl)music()});
+['pointerdown','touchend','keydown'].forEach(ev=>document.addEventListener(ev,()=>{warm();music()},{passive:true}));
 const meow=()=>{if(sfx(Math.random()<.2?'meow':'trill',.5,rnd(.94,1.08)))return;beep(620,0.16,'sawtooth',0.035,380);setTimeout(()=>beep(900,0.22,'sawtooth',0.03,-420),120)};
 const jingle=a=>a.forEach((f,i)=>setTimeout(()=>beep(f,0.14,'triangle',0.07),i*90));
 
