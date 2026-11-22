@@ -1,0 +1,14 @@
+{
+  "name": "Who Did This?! Cat Chaos",
+  "short_name": "Who Did This?!",
+  "description": "Bad cat. Big mess. No proof.",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#17132a",
+  "theme_color": "#17132a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
