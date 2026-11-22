@@ -307,7 +307,7 @@ en:{
   roomMeta:(s,p)=>`${s}-second round · the family peeks in ${p}×`,cSwing:'Tap to let go. Release on the upswing to fly far.',clothOff:'Tablecloth trick!',cablesOff:'Unplugged!',slip:'Whoa, slippery!',bonk:'Bonk! −60',
   cKeyR:{salon:'Key in the door! Get back to your bed in the bottom-left corner!',kuchnia:'Key in the door! Climb back to your bed on top of the fridge!',biuro:'Key in the door! Get into the desk drawer. From the desk, aim downwards to drop through.'},
   cPull:{curtain:'Hang on to the curtain! The rod is about to give.',cloth:'Keep pulling! The tablecloth is sliding off.',cables:'Keep pulling! The cables are coming loose.'},
-  print:'Printing!',wobble:'Wobbling… hit it again!',roomUp:n=>`<b>${n} unlocked!</b> A new room to wreck.`,lock:n=>`Earn 2 stars in the ${n} to get in.`,music:on=>`Music: ${on?'on':'off'}`,
+  print:'Printing!',testSnd:'Test sound',sndHelp:'You should hear a meow. If not, check the mute switch on the side of the phone and the volume, then tap again.',wobble:'Wobbling… hit it again!',roomUp:n=>`<b>${n} unlocked!</b> A new room to wreck.`,lock:n=>`Earn 2 stars in the ${n} to get in.`,music:on=>`Music: ${on?'on':'off'}`,
   ranks:['Kitten','Youngster','Tomcat','Terror of the block'],
   tro:{star:'Tree-top star',bauble:'Bauble (intact!)',mouse:'Toy mouse',sock:'Odd sock',fish:'Goldfish',bell:'Golden bell',remote:'TV remote',cake:'Cake crumb',spoon:'Silver teaspoon',magnet:'Fridge magnet',clip:'Paperclip chain',pen:'Fancy pen'},
   acc:{bow:'Bow tie',bell:'Bell',hat:'Santa hat'},
@@ -349,7 +349,7 @@ pl:{
   roomMeta:(s,p)=>`Runda ${s} s · domownicy zaglądają ${p}×`,cSwing:'Stuknij, żeby się puścić. Puść się w górze wahnięcia, żeby polecieć daleko.',clothOff:'Numer z obrusem!',cablesOff:'Odłączone!',slip:'Ups, ślisko!',bonk:'Bęc! −60',
   cKeyR:{salon:'Klucz w zamku! Wracaj na legowisko w lewym dolnym rogu!',kuchnia:'Klucz w zamku! Wspinaj się na legowisko na lodówce!',biuro:'Klucz w zamku! Wracaj do szuflady. Z biurka celuj w dół, żeby zeskoczyć pod blat.'},
   cPull:{curtain:'Trzymaj się firanki! Karnisz zaraz puści.',cloth:'Ciągnij dalej! Obrus już się zsuwa.',cables:'Ciągnij dalej! Kable zaraz puszczą.'},
-  print:'Drukuję!',wobble:'Chwieje się… jeszcze raz!',roomUp:n=>`<b>${n}: nowy pokój odblokowany!</b>`,lock:n=>`Zdobądź 2 gwiazdki w pokoju ${n}, żeby tu wejść.`,music:on=>`Muzyka: ${on?'wł.':'wył.'}`,
+  print:'Drukuję!',testSnd:'Test dźwięku',sndHelp:'Powinno być słychać miauknięcie. Jeśli nie, sprawdź przełącznik wyciszenia z boku telefonu i głośność, potem stuknij ponownie.',wobble:'Chwieje się… jeszcze raz!',roomUp:n=>`<b>${n}: nowy pokój odblokowany!</b>`,lock:n=>`Zdobądź 2 gwiazdki w pokoju ${n}, żeby tu wejść.`,music:on=>`Muzyka: ${on?'wł.':'wył.'}`,
   ranks:['Kociak','Podrostek','Kocur','Postrach osiedla'],
   tro:{star:'Gwiazda z choinki',bauble:'Bombka (cała!)',mouse:'Mysz-zabawka',sock:'Skarpetka nie do pary',fish:'Złota rybka',bell:'Złoty dzwoneczek',remote:'Pilot od telewizora',cake:'Okruch tortu',spoon:'Srebrna łyżeczka',magnet:'Magnes z lodówki',clip:'Łańcuszek ze spinaczy',pen:'Eleganckie pióro'},
   acc:{bow:'Muszka',bell:'Dzwoneczek',hat:'Czapka Mikołaja'},
@@ -407,11 +407,20 @@ function beep(f,d=0.08,type='triangle',v=0.08,slide=0){
 }
 const SFX={};
 ['meow','trill','hiss','ceramic','glass','thud','pan','tree','key','purr','steps','spray'].forEach(n=>{try{fetch('s/'+n+'.mp3').then(r=>r.ok?r.arrayBuffer():Promise.reject()).then(b=>{SFX[n]={raw:b}}).catch(()=>{})}catch(e){}});
-function warm(){try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
+const IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const HA={};let haOk=0,diag=false;
+function haUnlock(){if(haUnlock.done)return;haUnlock.done=1;
+  ['meow','trill','hiss','ceramic','glass','thud','pan','tree','key','purr','steps','spray'].forEach(n=>{HA[n]=[0,1].map(()=>{const a=new Audio('s/'+n+'.mp3');a.preload='auto';a.muted=true;
+    try{const p=a.play();if(p&&p.then)p.then(()=>{a.pause();a.currentTime=0;a.muted=false;haOk++}).catch(()=>{a.muted=false})}catch(e){a.muted=false}return a})})}
+function sndStatus(){let d=0;for(const n in SFX)if(SFX[n].buf)d++;
+  return 'ctx '+(AC?AC.state:'none')+' · fx '+d+'/12'+(IOS?' · ios '+haOk+'/24':'')+' · music '+(musicEl?(musicEl.error?'error '+musicEl.error.code:musicEl.paused?'paused':'playing '+musicEl.currentTime.toFixed(1)+'s'):'none')+' · sound '+(S.sound?'on':'off')}
+function warm(){if(IOS)haUnlock();try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
   try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state!=='running')AC.resume();
   if(!warm.done){warm.done=1;const sb=AC.createBufferSource();sb.buffer=AC.createBuffer(1,1,22050);sb.connect(AC.destination);sb.start(0)}
   for(const n in SFX){const s=SFX[n];if(s.raw&&!s.dec){s.dec=true;const pr=AC.decodeAudioData(s.raw.slice(0),b=>{s.buf=b},()=>{s.dec=false});if(pr&&pr.catch)pr.catch(()=>{})}}}catch(e){}}
-function sfx(n,vol=.6,rate=1){if(!S.sound)return true;const s=SFX[n];if(!s||!s.buf||!AC)return false;
+function sfx(n,vol=.6,rate=1){if(!S.sound)return true;
+  if(IOS&&HA[n]){const a=HA[n].find(x=>x.paused||x.ended)||HA[n][0];try{a.muted=false;a.currentTime=0;a.playbackRate=rate;a.volume=Math.min(1,vol*1.3);const p=a.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}return true}
+ const s=SFX[n];if(!s||!s.buf||!AC)return false;
   try{const src=AC.createBufferSource(),g=AC.createGain();src.buffer=s.buf;src.playbackRate.value=rate;g.gain.value=vol;src.connect(g).connect(AC.destination);src.start();return true}catch(e){return false}}
 let musicEl=null;
 function music(){try{if(!musicEl){musicEl=new Audio('s/music.mp3');musicEl.loop=true;musicEl.volume=.28}
@@ -1117,11 +1126,12 @@ function render(){
   }else{
     const l=level(),a=lvlStart(l),b=lvlStart(l+1),pc=Math.round((S.xp-a)/(b-a)*100),gap=giftGap(),day=gap===1?Math.min(S.streak+1,7):1;
     h=`<div class="row"><img class="appicon sm" src="a/icon.webp" alt=""><div style="flex:1"><h1>${t('title')}</h1><div class="tag">Cat Chaos</div></div><span class="coins">🐟 ${S.coins}</span></div>
-    <div class="card"><div class="row"><b>${esc(S.name)}</b><span class="muted">${t('rankLine',rank(),l)}</span><span class="spacer"></span>${langBtn()}<button type="button" data-act="snd" style="padding:4px 10px;font-size:.8rem">${t('sound',S.sound)}</button><button type="button" data-act="mus" style="padding:4px 10px;font-size:.8rem">${t('music',S.music)}</button></div>
+    <div class="card"><div class="row"><b>${esc(S.name)}</b><span class="muted">${t('rankLine',rank(),l)}</span><span class="spacer"></span>${langBtn()}<button type="button" data-act="snd" style="padding:4px 10px;font-size:.8rem">${t('sound',S.sound)}</button><button type="button" data-act="mus" style="padding:4px 10px;font-size:.8rem">${t('music',S.music)}</button><button type="button" data-act="tst" style="padding:4px 10px;font-size:.8rem">${t('testSnd')}</button></div>
       <div class="row"><div class="bar"><i style="width:${pc}%"></i></div><span class="muted">${S.xp-a} / ${b-a}</span></div></div>
     ${gap>=1?`<div class="card gold"><div class="row"><div style="flex:1"><b>${t('bowlDay',day)}</b><div class="muted">${gap>=3&&gap<99&&S.rounds?t('bowlSulk',esc(S.name)):t('bowlHint')}</div></div><button type="button" class="primary pkg" data-act="gift">+${GIFT[day-1]} 🐟</button></div>
       <div class="days">${GIFT.map((g,i)=>`<i class="${i<day-1?'ok':''}"></i>`).join('')}</div></div>`
      :`<div class="card"><div class="row"><b>${t('bowlDone')}</b><span class="spacer"></span><span class="muted">${t('tomorrow',GIFT[S.streak%7])}</span></div><div class="days">${GIFT.map((g,i)=>`<i class="${i<S.streak?'ok':''}"></i>`).join('')}</div></div>`}
+    ${diag?`<p class="muted">${t('sndHelp')}<br><code>${esc(sndStatus())}</code></p>`:''}
     <div class="tabs">${Object.keys(D.tabs).map(k=>`<button type="button" data-act="tab" data-k="${k}" aria-pressed="${tab===k}">${D.tabs[k]}</button>`).join('')}</div>`;
     if(tab==='pokoje'){
       h+=Object.keys(ROOMS).map(id=>{const R=ROOMS[id],sv=S.rooms[id],open=roomOpen(id);
@@ -1172,6 +1182,7 @@ sheet.addEventListener('click',e=>{
   else if(a==='lang'){const nm=$('nm'),v=nm?nm.value:'';S.lang=S.lang==='pl'?'en':'pl';save();applyLang();render();if($('nm'))$('nm').value=v}
   else if(a==='tab'){tab=k;render()}
   else if(a==='snd'){S.sound=!S.sound;save();render();beep(660,0.08)}
+  else if(a==='tst'){diag=true;meow();setTimeout(()=>{if(mode==='home')render()},900);render()}
   else if(a==='mus'){S.music=!S.music;save();music();render()}
   else if(a==='wear'){S.wear=k;save();render()}
   else if(a==='home'){mode='home';result=null;setup();cat.sleep=true;render();sheet.scrollTop=0}
