@@ -34,3 +34,13 @@ Progress is saved in the browser only (`localStorage`).
 
 - Sprite positions inside each sheet are listed in the `AT` object near the top of the script in `index.html`.
 - `window.__game.bot(roomId, upgradeLevel)` plays one simulated round with a random bot; it was used to tune star thresholds. Pass a level index as the third argument (`bot('salon', 0, 3)`) to simulate a campaign level.
+
+## Tests
+
+`tests/layout-audit.js` opens every screen in English and Polish at several window sizes and reports any text or control that leaves its frame, overlaps a neighbour, or is clipped. It needs Node.js with Playwright installed.
+
+```bash
+node tests/layout-audit.js
+```
+
+Add `quick` to check one desktop size only, or set `SHOTS=some/folder` to save screenshots.
