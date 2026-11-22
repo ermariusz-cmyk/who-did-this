@@ -119,6 +119,11 @@ p{margin:0}
 input[type=text]{font:inherit;color:var(--ink);background:var(--panel-2);border:2px solid var(--line);border-radius:12px;padding:9px 12px;width:100%;box-sizing:border-box}
 .appicon{width:68px;height:68px;border-radius:22%;box-shadow:0 0 0 2px var(--line);flex:none}
 .appicon.sm{width:46px;height:46px}
+.sheet.title{align-items:center;text-align:center;gap:14px}
+.sheet.title .appicon{width:124px;height:124px}
+.sheet.title h1{font-size:2.5rem}
+.sheet.title > button{min-width:230px}
+button.primary.big{font-size:1.45rem;padding:13px 30px}
 .tag{font-family:var(--display);font-weight:800;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-size:.78rem}
 .lv-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
 .lvb{padding:7px 0 5px;border-radius:12px;display:flex;flex-direction:column;align-items:center;font-family:var(--display);font-size:1.1rem;line-height:1.05}
@@ -141,7 +146,7 @@ input[type=text]{font:inherit;color:var(--ink);background:var(--panel-2);border:
   <div class="stage" id="stage">
     <canvas id="cv" width="480" height="820" aria-label="Room where the cat makes a mess"></canvas>
     <div class="hud" id="hud" hidden>
-      <div class="hud-row"><button id="quit" type="button" aria-label="End round">✕</button><span id="hScore">0</span><span class="t" id="hTime">60</span></div>
+      <div class="hud-row"><button id="quit" type="button" aria-label="Pause">❚❚</button><span id="hScore">0</span><span class="t" id="hTime">60</span></div>
       <div class="hud-sub"><span class="st3" id="hStars"></span><div class="meter" id="hMeter"><i></i><span id="hMeterL">Zoomies</span></div><span class="pips" id="hPips"></span><span class="fishc" id="hFish">0</span></div>
     </div>
     <div class="sheet" id="sheet"></div>
@@ -284,6 +289,8 @@ const ORDER=['salon','kuchnia','biuro'];
 const passed=id=>S.lv[id].filter(x=>x>0).length;
 const roomOpen=id=>{const i=ORDER.indexOf(id);return i<=0||passed(ORDER[i-1])>=7||S.rooms[ORDER[i-1]].stars>=2};
 const freeOpen=id=>passed(id)>=5;
+const nextLevel=()=>{for(const id of ORDER){if(!roomOpen(id))break;const q=LEVELS[id].findIndex((d,i)=>!(S.lv[id][i]>0));if(q>=0)return[id,q]}return null};
+const starSum=()=>ORDER.reduce((a,id)=>a+S.lv[id].reduce((x,y)=>x+(y||0),0),0);
 /* poziomy: [czas, zaglądania, cel, ile, utrudnienie, wynik na trzecią gwiazdkę] */
 const LEVELS={
  salon:[[40,0,'knock',3,0,350],[40,0,'fish',6,0,1500],[45,0,'knock',6,0,900],[45,0,'fan',2,0,2000],[45,1,'baub',4,0,1200],[50,1,'curt',1,0,2000],[50,1,'combo',4,0,600],[50,2,'tree',1,0,3000],[55,2,'knock',12,0,3300],[60,2,'score',3500,0,4200]],
@@ -319,7 +326,7 @@ en:{
   boxTitle:'Box of loot',of:(a,b)=>`${a} of ${b}`,notFound:'Not found yet',accTitle:'Accessories',none:'None',
   accHint:'Accessories sometimes turn up in the courier parcel.',
   albumTitle:'Evidence',albumEmpty:'Empty. A photo lands here when you beat a room record or when Dad comes home with his phone.',
-  pts:'pts',photoBy:' · photo: Dad',albumAlt:'Wrecked room',starsAria:n=>`${n} of 3 stars`,canvasAria:'Room where the cat makes a mess',quitAria:'End round',meter:'Zoomies',
+  pts:'pts',photoBy:' · photo: Dad',albumAlt:'Wrecked room',starsAria:n=>`${n} of 3 stars`,canvasAria:'Room where the cat makes a mess',quitAria:'Pause',meter:'Zoomies',
   room:{salon:['Living Room','Christmas tree, ceiling fan, curtain and shelves full of mugs.'],kuchnia:['Kitchen','Swing on the lamp, pull the tablecloth, mind the wet floor. Your bed is on top of the fridge.'],biuro:['Home Office','Bookcases to climb, cables to yank and a robot vacuum that hunts you. Your bed is in the desk drawer.']},
   roomMeta:(s,p)=>`${s}-second round · the family peeks in ${p}×`,cSwing:'Tap to let go. Release on the upswing to fly far.',clothOff:'Tablecloth trick!',cablesOff:'Unplugged!',slip:'Whoa, slippery!',bonk:'Bonk! −60',
   cKeyR:{salon:'Key in the door! Get back to your bed in the bottom-left corner!',kuchnia:'Key in the door! Climb back to your bed on top of the fridge!',biuro:'Key in the door! Get into the desk drawer. From the desk, aim downwards to drop through.'},
@@ -328,6 +335,8 @@ en:{
     pans:n=>`Knock down ${n} pans`,swing:n=>`Swing on the lamp for ${n} seconds`,plates:n=>`Smash ${n} plates`,cloth:()=>'Pull the tablecloth off',prints:n=>`Spill the flour and leave ${n} paw prints`,paper:n=>`Print ${n} pages`,chair:n=>`Spin on the chair for ${n} seconds`,globe:()=>'Send the globe rolling',monitor:()=>'Knock the monitor off the desk',cables:()=>'Yank the cables off the desk'},
   lvName:(r,n)=>`${r} · Level ${n}`,lvShort:n=>`Level ${n}`,star1:'Reach the goal',star2:'Get back to your bed in time',star3:n=>`Do both and score ${n} points`,goalDone:'Goal done! Back to bed!',lvFail:"Time's up. The goal was not reached.",lvPass:'Level complete!',
   next:'Next level',retry:'Try again',freePlay:'Free play',freeLock:'Free play opens after level 5',roomLock:n=>`Finish 7 levels in the ${n} to open this room.`,levels:'Levels',goalLbl:'Goal',
+  playBig:'Play',contBig:(r,n)=>`Continue · ${r} ${n}`,menuBtn:'Levels and upgrades',verNote:'Test build',paused:'Paused',resume:'Resume',restart:'Start over',quitHome:'Quit to menu',
+  roomDone:n=>`<b>${n} complete!</b> All ten levels are done.`,allDone:'<b>You wrecked the whole house!</b> More rooms are on the way. Until then, go for three stars everywhere or try free play.',nextRoom:n=>`Next room: ${n}`,totalStars:(a,b)=>`★ ${a} / ${b}`,
   print:'Printing!',testSnd:'Test sound',sndHelp:'You should hear a meow. If not, check the mute switch on the side of the phone and the volume, then tap again.',wobble:'Wobbling… hit it again!',roomUp:n=>`<b>${n} unlocked!</b> A new room to wreck.`,lock:n=>`Earn 2 stars in the ${n} to get in.`,music:on=>`Music: ${on?'on':'off'}`,
   ranks:['Kitten','Youngster','Tomcat','Terror of the block'],
   tro:{star:'Tree-top star',bauble:'Bauble (intact!)',mouse:'Toy mouse',sock:'Odd sock',fish:'Goldfish',bell:'Golden bell',remote:'TV remote',cake:'Cake crumb',spoon:'Silver teaspoon',magnet:'Fridge magnet',clip:'Paperclip chain',pen:'Fancy pen'},
@@ -365,7 +374,7 @@ pl:{
   boxTitle:'Karton z łupami',of:(a,b)=>`${a} z ${b}`,notFound:'Nie znalezione',accTitle:'Dodatki',none:'Bez',
   accHint:'Dodatki trafiają się czasem w paczce od kuriera.',
   albumTitle:'Dowody zbrodni',albumEmpty:'Pusto. Zdjęcie trafia tu, gdy pobijesz rekord pokoju albo gdy wróci tata z telefonem.',
-  pts:'pkt',photoBy:' · fot. tata',albumAlt:'Zdemolowany pokój',starsAria:n=>`${n} z 3 gwiazdek`,canvasAria:'Pokój, w którym kot robi bałagan',quitAria:'Zakończ rundę',meter:'Głupawka',
+  pts:'pkt',photoBy:' · fot. tata',albumAlt:'Zdemolowany pokój',starsAria:n=>`${n} z 3 gwiazdek`,canvasAria:'Pokój, w którym kot robi bałagan',quitAria:'Pauza',meter:'Głupawka',
   room:{salon:['Salon','Choinka, wiatrak, firanka i półki pełne kubków.'],kuchnia:['Kuchnia','Huśtaj się na lampie, ściągnij obrus, uważaj na mokrą podłogę. Legowisko jest na lodówce.'],biuro:['Biuro','Regały do wspinaczki, kable do wyrwania i odkurzacz, który na ciebie poluje. Legowisko jest w szufladzie biurka.']},
   roomMeta:(s,p)=>`Runda ${s} s · domownicy zaglądają ${p}×`,cSwing:'Stuknij, żeby się puścić. Puść się w górze wahnięcia, żeby polecieć daleko.',clothOff:'Numer z obrusem!',cablesOff:'Odłączone!',slip:'Ups, ślisko!',bonk:'Bęc! −60',
   cKeyR:{salon:'Klucz w zamku! Wracaj na legowisko w lewym dolnym rogu!',kuchnia:'Klucz w zamku! Wspinaj się na legowisko na lodówce!',biuro:'Klucz w zamku! Wracaj do szuflady. Z biurka celuj w dół, żeby zeskoczyć pod blat.'},
@@ -374,6 +383,8 @@ pl:{
     pans:n=>`Zrzuć ${n} patelnie`,swing:n=>`Huśtaj się na lampie ${n} sekundy`,plates:n=>`Stłucz ${n} talerze`,cloth:()=>'Ściągnij obrus',prints:n=>`Rozsyp mąkę i zostaw ${n} śladów łap`,paper:n=>`Wydrukuj ${n} strony`,chair:n=>`Kręć się na fotelu ${n} sekundy`,globe:()=>'Puść globus w ruch',monitor:()=>'Zrzuć monitor z biurka',cables:()=>'Wyrwij kable z biurka'},
   lvName:(r,n)=>`${r} · Poziom ${n}`,lvShort:n=>`Poziom ${n}`,star1:'Wykonaj cel',star2:'Zdąż wrócić na legowisko',star3:n=>`Zrób jedno i drugie i zdobądź ${n} punktów`,goalDone:'Cel wykonany! Wracaj na legowisko!',lvFail:'Koniec czasu. Cel nie został wykonany.',lvPass:'Poziom zaliczony!',
   next:'Następny poziom',retry:'Spróbuj ponownie',freePlay:'Gra dowolna',freeLock:'Gra dowolna otwiera się po poziomie 5',roomLock:n=>`Zalicz 7 poziomów w pokoju ${n}, żeby otworzyć ten pokój.`,levels:'Poziomy',goalLbl:'Cel',
+  playBig:'Graj',contBig:(r,n)=>`Dalej · ${r} ${n}`,menuBtn:'Poziomy i ulepszenia',verNote:'Wersja testowa',paused:'Pauza',resume:'Wróć do gry',restart:'Zacznij od nowa',quitHome:'Wyjdź do menu',
+  roomDone:n=>`<b>${n}: komplet!</b> Wszystkie dziesięć poziomów zaliczone.`,allDone:'<b>Cały dom zdemolowany!</b> Kolejne pokoje są w drodze. Do tego czasu zbieraj po trzy gwiazdki albo zagraj w grę dowolną.',nextRoom:n=>`Następny pokój: ${n}`,totalStars:(a,b)=>`★ ${a} / ${b}`,
   print:'Drukuję!',testSnd:'Test dźwięku',sndHelp:'Powinno być słychać miauknięcie. Jeśli nie, sprawdź przełącznik wyciszenia z boku telefonu i głośność, potem stuknij ponownie.',wobble:'Chwieje się… jeszcze raz!',roomUp:n=>`<b>${n}: nowy pokój odblokowany!</b>`,lock:n=>`Zdobądź 2 gwiazdki w pokoju ${n}, żeby tu wejść.`,music:on=>`Muzyka: ${on?'wł.':'wył.'}`,
   ranks:['Kociak','Podrostek','Kocur','Postrach osiedla'],
   tro:{star:'Gwiazda z choinki',bauble:'Bombka (cała!)',mouse:'Mysz-zabawka',sock:'Skarpetka nie do pary',fish:'Złota rybka',bell:'Złoty dzwoneczek',remote:'Pilot od telewizora',cake:'Okruch tortu',spoon:'Srebrna łyżeczka',magnet:'Magnes z lodówki',clip:'Łańcuszek ze spinaczy',pen:'Eleganckie pióro'},
@@ -450,7 +461,8 @@ function sfx(n,vol=.6,rate=1){if(!S.sound)return true;
 let musicEl=null;
 function music(){try{if(!musicEl){musicEl=new Audio('s/music.mp3');musicEl.loop=true;musicEl.volume=.28}
   if(S.music&&!document.hidden){const p=musicEl.play();if(p&&p.catch)p.catch(()=>{})}else musicEl.pause()}catch(e){}}
-document.addEventListener('visibilitychange',()=>{if(musicEl)music()});
+document.addEventListener('visibilitychange',()=>{if(musicEl)music();if(document.hidden&&mode==='play'&&!paused){paused=true;render()}});
+document.addEventListener('keydown',e=>{if((e.key==='Escape'||e.key==='p'||e.key==='P')&&mode==='play'&&e.target.tagName!=='INPUT'){paused=!paused;render()}});
 ['pointerdown','touchend','keydown'].forEach(ev=>document.addEventListener(ev,()=>{warm();music()},{passive:true}));
 const meow=()=>{if(sfx(Math.random()<.2?'meow':'trill',.5,rnd(.94,1.08)))return;beep(620,0.16,'sawtooth',0.035,380);setTimeout(()=>beep(900,0.22,'sawtooth',0.03,-420),120)};
 const jingle=a=>a.forEach((f,i)=>setTimeout(()=>beep(f,0.14,'triangle',0.07),i*90));
@@ -505,7 +517,7 @@ let roomId=ROOMS[S.room]?S.room:'salon',room=ROOMS[roomId];
 
 /* ---------- stan rundy ---------- */
 let chairTh=0,LV=null,goalDone=false,PUD=null,CHASE=false;
-let plats,objs,parts,texts,prints,fishes,cat,tree,fan,curtain,robot,cake,catnip,mode='home',tab='pokoje';
+let plats,objs,parts,texts,prints,fishes,cat,tree,fan,curtain,robot,cake,catnip,mode='home',tab='pokoje',paused=false;
 let score,timeLeft,roundT,combo,lastKnock,shake,rs,result=null,aim=null,tNow=0,tut=null,intro=0,slow=0,flash=0,idle=0;
 let zm=0,zoom=0,peek=null,peekTimes=[],missions=[],floured=0,fishT=0,misT=0,nipAt=0;
 
@@ -1133,14 +1145,31 @@ const swatches=act=>Object.keys(CATCOL).map(k=>`<button type="button" class="cat
 const langBtn=()=>`<button type="button" data-act="lang" style="padding:4px 10px;font-size:.8rem">${t('other')}</button>`;
 function render(){
   let h='';sheet.hidden=false;sheet.className='sheet';const D=LG();
-  if(!S.name){
+  if(mode==='title'){
+    sheet.className='sheet mid title';const nl=S.name?nextLevel():null;
+    h=`<img class="appicon" src="a/icon.webp" alt=""><div><h1>${t('title')}</h1><div class="tag">Cat Chaos</div></div>
+    <p><b>${t('tagline')}</b></p>
+    <button type="button" class="primary big" data-act="cont">${nl&&S.rounds?t('contBig',D.room[nl[0]][0],nl[1]+1):t('playBig')}</button>
+    ${S.name?`<button type="button" data-act="home">${t('menuBtn')}</button><div class="coins">${t('totalStars',starSum(),ORDER.length*30)}</div>`:''}
+    <div class="row" style="justify-content:center">${langBtn()}<button type="button" data-act="snd" style="padding:4px 10px;font-size:.8rem">${t('sound',S.sound)}</button><button type="button" data-act="mus" style="padding:4px 10px;font-size:.8rem">${t('music',S.music)}</button></div>
+    <p class="muted">${t('verNote')}</p>`;
+  }else if(!S.name){
     sheet.className='sheet mid';
     h=`<div class="row"><img class="appicon" src="a/icon.webp" alt=""><div style="flex:1"><h1>${t('title')}</h1><div class="tag">Cat Chaos</div></div>${langBtn()}</div>
     <p><b>${t('tagline')}</b> ${t('introLine')}</p>
     <div class="card"><h2>${t('nameQ')}</h2><input type="text" id="nm" maxlength="14" placeholder="${t('namePh')}" autocomplete="off">
       <b>${t('fur')}</b><div class="row">${swatches('col')}</div></div>
     <div class="row"><button type="button" class="primary" data-act="start">${t('letsGo')}</button></div>`;
-  }else if(mode==='play'){sheet.hidden=true;return}
+  }else if(mode==='play'){
+    if(!paused){sheet.hidden=true;return}
+    sheet.className='sheet mid title';
+    h=`<h1>${t('paused')}</h1>
+    ${LV?`<div class="card gold" style="align-self:stretch"><div class="muted">${t('lvName',D.room[roomId][0],LV.i+1)}</div><b>🎯 ${goalText(LV)}</b></div>`:`<p class="muted">${D.room[roomId][0]} · ${t('freePlay')}</p>`}
+    <button type="button" class="primary big" data-act="resume">${t('resume')}</button>
+    <button type="button" data-act="restart">${t('restart')}</button>
+    <button type="button" data-act="home">${t('quitHome')}</button>
+    <div class="row" style="justify-content:center"><button type="button" data-act="snd" style="padding:4px 10px;font-size:.8rem">${t('sound',S.sound)}</button><button type="button" data-act="mus" style="padding:4px 10px;font-size:.8rem">${t('music',S.music)}</button></div>`;
+  }
   else if(mode==='brief'){
     sheet.className='sheet low';
     if(LV)h=`<h2>${t('lvName',D.room[roomId][0],LV.i+1)}</h2>
@@ -1153,6 +1182,14 @@ function render(){
     h+=`<div class="row"><button type="button" class="primary" data-act="go">${t('start')}</button><button type="button" data-act="home">${t('back')}</button></div>`;
   }else if(mode==='result'&&result){
     const r=result;sheet.className='sheet low';
+    const B=(cls,k,l,txt)=>`<button type="button" ${cls?'class="primary"':''} data-act="play" data-k="${k}" ${l==null?'':`data-l="${l}"`}>${txt}</button>`;
+    let btns,endNote='';
+    if(!r.lv)btns=B(1,roomId,null,t('again'));
+    else if(!r.lv.pass)btns=B(1,roomId,r.lv.i,t('retry'));
+    else if(r.lv.i<9)btns=B(1,roomId,r.lv.i+1,t('next'))+B(0,roomId,r.lv.i,t('retry'));
+    else{const nr=ORDER[ORDER.indexOf(roomId)+1],all=ORDER.every(id=>passed(id)>=10);
+      endNote=`<p class="note done">${all?t('allDone'):t('roomDone',D.room[roomId][0])}</p>`;
+      btns=(nr&&roomOpen(nr)&&!all?B(1,nr,LEVELS[nr].findIndex((d,q)=>!(S.lv[nr][q]>0))<0?0:LEVELS[nr].findIndex((d,q)=>!(S.lv[nr][q]>0)),t('nextRoom',D.room[nr][0])):'')+B(0,roomId,r.lv.i,t('retry'))}
     h=`<div class="row"><div>${starsHtml(r.stars,true)}<div class="big">${r.final}</div><div class="muted">${t('chaosLine',r.score,r.inBed)}</div></div>
       <span class="spacer"></span><div class="coins">+${r.coins} 🐟</div></div>
     ${r.lv?`<div class="card ${r.lv.pass?'gold':''}"><div class="muted">${t('lvName',D.room[roomId][0],r.lv.i+1)}</div><b>${r.lv.pass?t('lvPass'):t('lvFail')}</b>
@@ -1165,7 +1202,7 @@ function render(){
     ${r.found.length?`<p class="note done"><b>${t('loot')}</b> ${r.found.map(k=>TRO[k]+' '+D.tro[k]).join(', ')}.</p>`:''}
     ${r.lvUp?`<p class="note done">${t('lvUp',esc(S.name),level(),rank())}</p>`:''}
     ${r.tiedUp?`<p class="note rose">${t('tiedUp')}</p>`:''}
-    <div class="row">${r.lv?(r.lv.pass&&r.lv.i<9?`<button type="button" class="primary" data-act="play" data-k="${roomId}" data-l="${r.lv.i+1}">${t('next')}</button><button type="button" data-act="play" data-k="${roomId}" data-l="${r.lv.i}">${t('retry')}</button>`:`<button type="button" class="primary" data-act="play" data-k="${roomId}" data-l="${r.lv.i}">${t('retry')}</button>`):`<button type="button" class="primary" data-act="play" data-k="${roomId}">${t('again')}</button>`}<button type="button" data-act="home">${t('homeBtn')}</button></div>`;
+    ${endNote}<div class="row">${btns}<button type="button" data-act="home">${t('homeBtn')}</button></div>`;
   }else{
     const l=level(),a=lvlStart(l),b=lvlStart(l+1),pc=Math.round((S.xp-a)/(b-a)*100),gap=giftGap(),day=gap===1?Math.min(S.streak+1,7):1;
     h=`<div class="row"><img class="appicon sm" src="a/icon.webp" alt=""><div style="flex:1"><h1>${t('title')}</h1><div class="tag">Cat Chaos</div></div><span class="coins">🐟 ${S.coins}</span></div>
@@ -1211,7 +1248,7 @@ function brief(id,li){
 }
 function startPlay(){
   warm();music();
-  mode='play';cat.sleep=false;
+  mode='play';paused=false;cat.sleep=false;
   if(tut){if(robot){plats.pop();robot=null}intro=0}else intro=3;
   hudKey='';hud.hidden=false;updateHud();render();beep(520,0.1,'sine',0.06,300);
   if(!tut){if(robot)say(robot.x,FLOOR-60,t('robot'),'#86d0ae');if(cake)say(300,360,t('cakeHint'),'#f7c6d0')}
@@ -1228,7 +1265,10 @@ sheet.addEventListener('click',e=>{
   else if(a==='tst'){diag=true;meow();setTimeout(()=>{if(mode==='home')render()},900);render()}
   else if(a==='mus'){S.music=!S.music;save();music();render()}
   else if(a==='wear'){S.wear=k;save();render()}
-  else if(a==='home'){mode='home';result=null;setup();cat.sleep=true;render();sheet.scrollTop=0}
+  else if(a==='home'){LV=null;paused=false;tut=null;mode='home';result=null;hud.hidden=true;coach.innerHTML='';setup();cat.sleep=true;render();sheet.scrollTop=0}
+  else if(a==='cont'){const nl=S.name?nextLevel():null;if(!S.name||!nl){mode='home';render()}else brief(nl[0],nl[1])}
+  else if(a==='resume'){paused=false;render()}
+  else if(a==='restart'){const li=LV?LV.i:null;paused=false;tut=null;hud.hidden=true;coach.innerHTML='';brief(roomId,li)}
   else if(a==='tutorial'){S.tutDone=false;brief('salon',0)}
   else if(a==='play')brief(k,b.dataset.l===undefined||b.dataset.l===''?null:+b.dataset.l);
   else if(a==='go')startPlay();
@@ -1237,7 +1277,7 @@ sheet.addEventListener('click',e=>{
   else if(a==='buy'){const c=COST[S.up[k]];if(S.up[k]<5&&S.coins>=c){S.coins-=c;S.up[k]++;save();jingle([523,659,784]);render()}}
 });
 sheet.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='nm'){const b=sheet.querySelector('[data-act="start"]');if(b)b.click()}});
-$('quit').onclick=()=>{LV=null;mode='home';hud.hidden=true;coach.innerHTML='';tut=null;setup();cat.sleep=true;render()};
+$('quit').onclick=()=>{if(mode==='play'){paused=true;render()}};
 
 /* ---------- rozmiar sceny i pętla ---------- */
 function fit(){const vw=$('wrap').clientWidth,vh=window.innerHeight||800;let w=Math.min(vw,540,(vh-112)*W/H);w=Math.max(w,Math.min(vw,280));stageEl.style.width=w+'px';stageEl.style.height=(w*H/W)+'px';coach.style.width=w+'px'}
@@ -1245,11 +1285,12 @@ window.addEventListener('resize',fit);fit();
 let last=0;
 function frame(ts){
   const dt=Math.min(0.033,(ts-last)/1000||0.016);last=ts;
-  if(mode==='play'){idle+=dt;const k=slow>0&&!reduceMotion?.35:1;if(slow>0)slow-=dt;step(dt*k/2);if(mode==='play')step(dt*k/2);if(mode==='play')updateHud()}
+  if(mode==='play'&&paused){}
+  else if(mode==='play'){idle+=dt;const k=slow>0&&!reduceMotion?.35:1;if(slow>0)slow-=dt;step(dt*k/2);if(mode==='play')step(dt*k/2);if(mode==='play')updateHud()}
   else{tNow+=dt;fan.th+=fan.w*dt;fx(dt);texts=[]}
   draw();requestAnimationFrame(frame);
 }
-applyLang();setup();cat.sleep=true;render();requestAnimationFrame(frame);
+applyLang();setup();cat.sleep=true;mode='title';render();requestAnimationFrame(frame);
 function botRound(id,up,li){
   const keep=JSON.stringify(S);S.tutDone=true;S.rounds=5;S.sound=false;if(up!=null)for(const k of UP)S.up[k]=up;
   roomId=id;LV=li==null?null:mkLV(id,li);setup();if(!LV)pickMissions();else missions=[];peekTimes=peekPlan();mode='play';tut=null;intro=0;
@@ -1273,7 +1314,7 @@ function botRound(id,up,li){
     step(dt);if(!t70&&objs.filter(o=>o.state==='done').length>=objs.length*.7)t70=roundT-timeLeft;
   }
   const out={pass:result&&result.lv?result.lv.pass:false,left:objs.filter(o=>o.state==='static').length,n:objs.length,score,final:result?result.final:0,coins:result?result.coins:0,stars:result?result.stars:0,fish:rs.fish,caught:rs.caught,mis:missions.filter(q=>q.done).length,bed:rs.inBed};
-  S=JSON.parse(keep);save();LV=null;mode='home';result=null;hud.hidden=true;coach.innerHTML='';setup();cat.sleep=true;render();return out;
+  S=JSON.parse(keep);save();LV=null;paused=false;mode='home';result=null;hud.hidden=true;coach.innerHTML='';setup();cat.sleep=true;render();return out;
 }
 function allTexts(){const D=LG(),co=[...D.tut,D.cPeekWarn,D.cPeekWatch,...Object.values(D.cKeyR),D.cFan,D.cTree(1),D.cTree(3),...Object.values(D.cPull),D.cSwing,D.cDizzy,D.cZoom,D.cIntro(75),D.cHint];
   for(const r in LEVELS)LEVELS[r].forEach((d,i)=>{const l=mkLV(r,i);co.push(goalText(l)+(l.n>1?': '+(l.n>99?l.n-1:l.n-.5)+' / '+l.n:''))});
@@ -1285,7 +1326,7 @@ function sayTest(list){const fs=clamp(W/(cv.clientWidth||W),1,1.5),bad=[];let be
     const L=layText({text,big,x},fs,1.4);if(L.x-L.w/2<-.5||L.x+L.w/2>W+.5)bad.push(text+' ('+Math.round(L.x-L.w/2)+'..'+Math.round(L.x+L.w/2)+')')}
   let i=0;texts=[];for(const text of list.slice(0,9)){say(i%2?W:0,200+i*52,text,i%3?'#fff':'#ffd75e',i%4===0);i++}
   return{bad,before,total}}
-window.__game={texts:allTexts,sayTest,coachTest:tx=>{setCoach('<small>🎯</small><span>'+esc(tx)+'</span>','gold');return Math.max(0,coach.scrollHeight-coach.clientHeight)},bot:botRound,get s(){return{mode,score,timeLeft,cat,tree,objs,tut,peek,zoom,zm,rs,S}},set time(v){timeLeft=v},zoom:()=>{zm=100;startZoom()}};
+window.__game={setScore:v=>{score=v},texts:allTexts,sayTest,coachTest:tx=>{setCoach('<small>🎯</small><span>'+esc(tx)+'</span>','gold');return Math.max(0,coach.scrollHeight-coach.clientHeight)},bot:botRound,get s(){return{mode,score,timeLeft,cat,tree,objs,tut,peek,zoom,zm,rs,S}},set time(v){timeLeft=v},zoom:()=>{zm=100;startZoom()}};
 })();
 </script>
 

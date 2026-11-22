@@ -23,11 +23,13 @@ for(const lang of ['en','pl'])for(const [vw,vh] of SIZES){
       if(st.bottom>innerHeight+1)bad.push('stage below the window: '+Math.round(st.bottom)+'>'+innerHeight);return bad});
     for(const x of [...new Set(r)])out.push(`[${lang} ${vw}x${vh}] ${name}: ${x}`);
     if(vw===1440||vw===390){if(process.env.SHOTS){await p.screenshot({path:`${process.env.SHOTS}/${lang}_${vw}_${name}.png`})}shots++}};
+  await check('title');await p.click('[data-act=home]');await p.waitForTimeout(200);
   await check('home');
   for(const tb of ['ulepszenia','kryjowka','album']){await p.click(`[data-act=tab][data-k=${tb}]`);await p.waitForTimeout(150);await check(tb)}
   await p.click('[data-act=tab][data-k=pokoje]');await p.click('[data-act=tst]');await p.waitForTimeout(1000);await check('test');
   await p.click('[data-act=play][data-k=salon][data-l="7"]');await p.waitForTimeout(250);await check('brief');
   await p.click('[data-act=go]');await p.waitForTimeout(500);await check('play-intro');
+  await p.click('#quit');await p.waitForTimeout(200);await check('pause');await p.click('[data-act=resume]');await p.waitForTimeout(200);
   // wszystkie podpowiedzi pod sceną i napisy na scenie, po kolei
   const texts=await p.evaluate(()=>window.__game.texts());
   let worst=0,worstT='';
