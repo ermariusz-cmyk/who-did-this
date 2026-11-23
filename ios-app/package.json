@@ -1,0 +1,20 @@
+{
+  "name": "who-did-this-ios",
+  "version": "1.0.0",
+  "private": true,
+  "description": "iOS wrapper for Who Did This?! Cat Chaos",
+  "scripts": {
+    "web": "bash scripts/copy-web.sh",
+    "ios:add": "cap add ios",
+    "ios:sync": "npm run web && cap sync ios && bash scripts/configure-ios.sh",
+    "ios:open": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/haptics": "^8.0.0",
+    "@capacitor/ios": "^8.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.0.0"
+  }
+}

@@ -17,13 +17,17 @@ Opening `index.html` straight from disk works too, but sound effects need a web 
 | `index.html` | The whole game: markup, styles and code in one file |
 | `a/` | Illustrations as sprite sheets (cat, furniture, props, people, backgrounds) |
 | `s/` | Music loop and sound effects |
+| `f/` | Fonts (Baloo 2, Nunito), bundled so the game works offline |
 | `icon-*.png` | App icon in several sizes |
+| `privacy.html`, `support.html` | Privacy policy and support pages (English and Polish) |
+| `store/` | App Store listing text and screenshots |
+| `ios-app/` | iOS wrapper (Capacitor) with build instructions |
 | `manifest.webmanifest` | Lets the game be added to a phone home screen |
 
 ## Features
 
-- Four rooms with their own layout, mechanics and difficulty: Living Room, Kitchen, Home Office, Bathroom
-- A 40-level campaign (10 levels per room), each with one clear goal and three stars; free play opens after level 5 of a room
+- Seven rooms with their own layout, mechanics and difficulty: Living Room, Kitchen, Home Office, Bathroom, Bedroom, Attic, Garden
+- A 70-level campaign (10 levels per room), each with one clear goal and three stars; free play opens after level 5 of a room
 - Fish currency, five upgrades, cat levels, stars and records per room
 - Daily bowl, courier parcel after each round, missions, loot stash, photo album
 - English by default, Polish as a second language

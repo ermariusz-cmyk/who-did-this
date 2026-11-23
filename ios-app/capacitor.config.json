@@ -1,0 +1,11 @@
+{
+  "appId": "com.example.whodidthis",
+  "appName": "Who Did This?!",
+  "webDir": "www",
+  "backgroundColor": "#17122b",
+  "ios": {
+    "contentInset": "never",
+    "scrollEnabled": false,
+    "allowsLinkPreview": false
+  }
+}

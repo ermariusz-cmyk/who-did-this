@@ -15,7 +15,12 @@
 <link rel="manifest" href="manifest.webmanifest">
 <style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Who Did This?! Cat Chaos</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap">
+<style>
+@font-face{font-family:'Baloo 2';font-style:normal;font-weight:400 800;font-display:swap;src:url(f/baloo2-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Baloo 2';font-style:normal;font-weight:400 800;font-display:swap;src:url(f/baloo2-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Nunito';font-style:normal;font-weight:200 1000;font-display:swap;src:url(f/nunito-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Nunito';font-style:normal;font-weight:200 1000;font-display:swap;src:url(f/nunito-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+</style>
 <style>
 /* Układ: jedna pionowa scena na cały ekran telefonu; pasek gry i podpowiedź leżą na scenie, dom i wynik to arkusze nad nią. Jeden, wieczorny wygląd. */
 :root{
@@ -165,8 +170,8 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const INK='#2b2030';
 /* numer wydania: skrypt budujący podmienia 'dev' na znacznik czasu; strona sama sprawdza, czy jest nowsza wersja */
-const BUILD='261123.2131';
-if(BUILD!=='dev')try{fetch('version.txt?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(v=>{v=v.trim();
+const BUILD='261123.2145';
+if(BUILD!=='dev'&&!window.Capacitor)try{fetch('version.txt?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(v=>{v=v.trim();
   if(v&&v!==BUILD&&!location.search.includes('v='+v))location.replace(location.pathname+'?v='+v)}).catch(()=>{})}catch(e){}
 
 /* ---------- ilustracje ---------- */
@@ -184,7 +189,7 @@ const OS={mug:['props',['mug0','mug1','mug2','mug3'],29,'b'],book:['props',['boo
   duck:['bath',['duck'],30,'b'],bottle:['bath',['bottle0','bottle1','bottle2'],18,'b'],cup:['bath',['cup'],24,'b'],soap:['bath',['soap'],30,'b'],towels:['bath',['towels'],42,'b'],tproll:['bath',['tproll'],28,'b'],mirror:['bath',['mirror'],66,'c'],tap:['bath',['tap'],40,'c'],
   bigpillow:['bed',['bigpillow'],44,'b'],teddy:['bed',['teddy'],34,'b'],bunny:['bed',['bunny'],36,'b'],lamp2:['bed',['lamp2'],34,'b'],alarm:['bed',['alarm'],26,'b'],slipper:['bed',['slipper0','slipper1'],20,'b'],sock:['bed',['sock0','sock1','sock2'],15,'b'],storybooks:['bed',['storybooks'],44,'b'],
   cbox:['attic',['cbox'],50,'c'],radio:['attic',['radio'],50,'b'],suitcase:['attic',['suitcase'],60,'b'],lantern:['attic',['lantern'],26,'b'],oldbooks:['attic',['oldbooks'],44,'b'],horse:['attic',['horse'],56,'b'],marbles:['attic',['marbles'],25,'b'],teapot:['attic',['teapot'],42,'b'],
-  pot:['garden',['pot0','pot1','pot2'],34,'b'],bird:['garden',['bird0','bird1'],30,'c'],gnome:['garden',['gnome'],30,'b'],wcan:['garden',['wcan'],50,'b'],ball:['garden',['ball'],30,'b'],birdhouse:['garden2',['birdhouse'],42,'b'],lantern2:['garden2',['lantern2'],36,'c']};
+  fpot:['garden',['pot0','pot1','pot2'],34,'b'],bird:['garden',['bird0','bird1'],30,'c'],gnome:['garden',['gnome'],30,'b'],wcan:['garden',['wcan'],50,'b'],ball:['garden',['ball'],30,'b'],birdhouse:['garden2',['birdhouse'],42,'b'],lantern2:['garden2',['lantern2'],36,'c']};
 const DEB={mug:['mug0','mug1','mug2','mug3'],plate:['plate'],vase:['vase'],bauble:['bauble0','bauble1','bauble2','bauble3'],jar:['jar'],cake:['cake']},DEBW={mug:46,plate:46,vase:62,bauble:34,jar:48,cake:54};
 const NECK={walk2:[.72,.52],land:[.72,.66],swat:[.62,.52],lick:[.60,.56],smug:[.62,.56],sit:[.68,.56],walk:[.72,.52],crouch:[.72,.66],leap:[.74,.56],hang:[.50,.36],scared:[.66,.60],zoom:[.70,.62]};
 const HEAD={walk2:[.68,.12],land:[.72,.28],swat:[.60,.10],lick:[.56,.09],smug:[.50,.14],sit:[.56,.09],walk:[.68,.12],crouch:[.72,.28],leap:[.76,.12],hang:[.36,.06],scared:[.70,.36],zoom:[.72,.24]};
@@ -357,7 +362,7 @@ en:{
   accHint:'Accessories sometimes turn up in the courier parcel.',
   albumTitle:'Evidence',albumEmpty:'Empty. A photo lands here when you beat a room record or when Dad comes home with his phone.',
   pts:'pts',photoBy:' · photo: Dad',albumAlt:'Wrecked room',starsAria:n=>`${n} of 3 stars`,canvasAria:'Room where the cat makes a mess',quitAria:'Pause',meter:'Zoomies',
-  room:{salon:['Living Room','Christmas tree, ceiling fan, curtain and shelves full of mugs.'],kuchnia:['Kitchen','Swing on the lamp, pull the tablecloth, mind the wet floor. Your bed is on top of the fridge.'],biuro:['Home Office','Bookcases to climb, cables to yank and a robot vacuum that hunts you. Your bed is in the desk drawer.'],lazienka:['Bathroom','Bounce on the bath foam, soak the floor with the tap and pull down the shower curtain. Your bed is the laundry basket.'],sypialnia:['Bedroom','Bounce on the mattress, burst the pillows and empty the sock drawer. Ring the alarm clock only if you dare. Your bed is on top of the wardrobe.'],strych:['Attic','Topple the tower of boxes, swing on the bulb and unveil the ghost. Watch out for the bat. Your bed is on the old trunk.'],ogrod:['Garden','Scare the birds, swing on the tyre, bounce on the trampoline and pull down the laundry. Mind the sprinkler. Your bed is in the cat house.']},
+  room:{salon:['Living Room','Christmas tree, ceiling fan, curtain and shelves full of mugs.'],kuchnia:['Kitchen','Swing on the lamp, pull the tablecloth, mind the wet floor. Your bed is on top of the fridge.'],biuro:['Home Office','Bookcases to climb, cables to yank and a robot vacuum that hunts you. Your bed is in the desk drawer.'],lazienka:['Bathroom','Bounce on the bath foam, soak the floor with the tap and pull down the shower curtain. Your bed is the laundry basket.'],sypialnia:['Bedroom','Bounce on the mattress, burst the pillows and empty the sock drawer. Ring the alarm clock only if you dare. Your bed is on top of the wardrobe.'],strych:['Attic','Topple the tower of boxes, swing on the bulb and unveil the ghost. Watch out for the bat. Your bed is on the old trunk.'],ogrod:['Garden','Scare the birds, swing on the tyre, bounce on the trampoline and pull down the laundry. Aim downwards to hop off the fence. Your bed is in the cat house.']},
   roomMeta:(s,p)=>`${s}-second round · the family peeks in ${p}×`,cSwing:'Tap to let go. Release on the upswing to fly far.',clothOff:'Tablecloth trick!',cablesOff:'Unplugged!',slip:'Whoa, slippery!',bonk:'Bonk! −60',
   cKeyR:{salon:'Key in the door! Get back to your bed in the bottom-left corner!',kuchnia:'Key in the door! Climb back to your bed on top of the fridge!',biuro:'Key in the door! Get into the desk drawer. From the desk, aim downwards to drop through.',lazienka:'Key in the door! Get into the laundry basket on the right. From the shelf above it, aim downwards.',sypialnia:'Key in the door! Climb back to your bed on top of the wardrobe!',strych:'Key in the door! Get back into the basket on the old trunk!',ogrod:'Key in the door! Run back into the cat house on the right!'},
   cPull:{curtain:'Hang on to the curtain! The rod is about to give.',cloth:'Keep pulling! The tablecloth is sliding off.',cables:'Keep pulling! The cables are coming loose.',shower:'Hang on! The shower rail is about to give.',drawer:'Keep pulling! The sock drawer is sliding out.',sheet:'Keep pulling! The dust sheet is slipping off.',laundry:'Keep pulling! The washing line is coming down.'},
@@ -407,7 +412,7 @@ pl:{
   accHint:'Dodatki trafiają się czasem w paczce od kuriera.',
   albumTitle:'Dowody zbrodni',albumEmpty:'Pusto. Zdjęcie trafia tu, gdy pobijesz rekord pokoju albo gdy wróci tata z telefonem.',
   pts:'pkt',photoBy:' · fot. tata',albumAlt:'Zdemolowany pokój',starsAria:n=>`${n} z 3 gwiazdek`,canvasAria:'Pokój, w którym kot robi bałagan',quitAria:'Pauza',meter:'Głupawka',
-  room:{salon:['Salon','Choinka, wiatrak, firanka i półki pełne kubków.'],kuchnia:['Kuchnia','Huśtaj się na lampie, ściągnij obrus, uważaj na mokrą podłogę. Legowisko jest na lodówce.'],biuro:['Biuro','Regały do wspinaczki, kable do wyrwania i odkurzacz, który na ciebie poluje. Legowisko jest w szufladzie biurka.'],lazienka:['Łazienka','Skacz po pianie w wannie, zalej podłogę z kranu i zerwij zasłonę prysznicową. Legowisko jest w koszu na pranie.'],sypialnia:['Sypialnia','Skacz po materacu, rozpruj poduszki i opróżnij szufladę ze skarpetkami. Budzik ruszaj na własne ryzyko. Legowisko jest na szafie.'],strych:['Strych','Zburz wieżę z kartonów, pohuśtaj się na żarówce i zdemaskuj ducha. Uważaj na nietoperza. Legowisko jest na starym kufrze.'],ogrod:['Ogród','Spłosz ptaki, pohuśtaj się na oponie, poskacz na trampolinie i ściągnij pranie. Uważaj na zraszacz. Legowisko jest w kocim domku.']},
+  room:{salon:['Salon','Choinka, wiatrak, firanka i półki pełne kubków.'],kuchnia:['Kuchnia','Huśtaj się na lampie, ściągnij obrus, uważaj na mokrą podłogę. Legowisko jest na lodówce.'],biuro:['Biuro','Regały do wspinaczki, kable do wyrwania i odkurzacz, który na ciebie poluje. Legowisko jest w szufladzie biurka.'],lazienka:['Łazienka','Skacz po pianie w wannie, zalej podłogę z kranu i zerwij zasłonę prysznicową. Legowisko jest w koszu na pranie.'],sypialnia:['Sypialnia','Skacz po materacu, rozpruj poduszki i opróżnij szufladę ze skarpetkami. Budzik ruszaj na własne ryzyko. Legowisko jest na szafie.'],strych:['Strych','Zburz wieżę z kartonów, pohuśtaj się na żarówce i zdemaskuj ducha. Uważaj na nietoperza. Legowisko jest na starym kufrze.'],ogrod:['Ogród','Spłosz ptaki, pohuśtaj się na oponie, poskacz na trampolinie i ściągnij pranie. Celuj w dół, żeby zeskoczyć z płotu. Legowisko jest w kocim domku.']},
   roomMeta:(s,p)=>`Runda ${s} s · domownicy zaglądają ${p}×`,cSwing:'Stuknij, żeby się puścić. Puść się w górze wahnięcia, żeby polecieć daleko.',clothOff:'Numer z obrusem!',cablesOff:'Odłączone!',slip:'Ups, ślisko!',bonk:'Bęc! −60',
   cKeyR:{salon:'Klucz w zamku! Wracaj na legowisko w lewym dolnym rogu!',kuchnia:'Klucz w zamku! Wspinaj się na legowisko na lodówce!',biuro:'Klucz w zamku! Wracaj do szuflady. Z biurka celuj w dół, żeby zeskoczyć pod blat.',lazienka:'Klucz w zamku! Wracaj do kosza na pranie po prawej. Z półki nad nim celuj w dół.',sypialnia:'Klucz w zamku! Wspinaj się na legowisko na szafie!',strych:'Klucz w zamku! Wracaj do koszyka na starym kufrze!',ogrod:'Klucz w zamku! Biegnij do kociego domku po prawej!'},
   cPull:{curtain:'Trzymaj się firanki! Karnisz zaraz puści.',cloth:'Ciągnij dalej! Obrus już się zsuwa.',cables:'Ciągnij dalej! Kable zaraz puszczą.',shower:'Trzymaj się! Drążek prysznica zaraz puści.',drawer:'Ciągnij dalej! Szuflada ze skarpetkami się wysuwa.',sheet:'Ciągnij dalej! Prześcieradło się zsuwa.',laundry:'Ciągnij dalej! Pranie zaraz spadnie.'},
@@ -488,7 +493,9 @@ function warm(){if(IOS)haUnlock();try{if(navigator.audioSession)navigator.audioS
   try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state!=='running')AC.resume();
   if(!warm.done){warm.done=1;const sb=AC.createBufferSource();sb.buffer=AC.createBuffer(1,1,22050);sb.connect(AC.destination);sb.start(0)}
   for(const n in SFX){const s=SFX[n];if(s.raw&&!s.dec){s.dec=true;const pr=AC.decodeAudioData(s.raw.slice(0),b=>{s.buf=b},()=>{s.dec=false});if(pr&&pr.catch)pr.catch(()=>{})}}}catch(e){}}
-function sfx(n,vol=.6,rate=1){if(!S.sound)return true;
+const HAPT={glass:'LIGHT',ceramic:'LIGHT',thud:'LIGHT',pan:'MEDIUM',tree:'HEAVY',spray:'HEAVY'};
+function hap(n){try{const H=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.Haptics;if(H&&HAPT[n])H.impact({style:HAPT[n]})}catch(e){}}
+function sfx(n,vol=.6,rate=1){hap(n);if(!S.sound)return true;
   if(IOS&&HA[n]){const a=HA[n].find(x=>x.paused||x.ended)||HA[n][0];try{a.muted=false;a.currentTime=0;a.playbackRate=rate;a.volume=Math.min(1,vol*1.3);const p=a.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}return true}
  const s=SFX[n];if(!s||!s.buf||!AC)return false;
   try{const src=AC.createBufferSource(),g=AC.createGain();src.buffer=s.buf;src.playbackRate.value=rate;g.gain.value=vol;src.connect(g).connect(AC.destination);src.start();return true}catch(e){return false}}
@@ -596,11 +603,11 @@ const ROOMS={
   curt:{x1:34,x2:206,y1:628,y2:700,type:'laundry',t:1.4},bed:{x:428,p:0,x1:400,x2:456},win:null,light:[420,330],
   fish:[[110,480],[280,470],[420,480],[60,270],[150,250],[290,330],[420,350],[317,580],[240,620],[300,220],[420,250],[200,180]],
   build(){
-    addObj('pot',60,526,22,45);addObj('pot',300,526,22,45);addObj('pot',452,526,22,45);
+    addObj('fpot',60,526,22,45);addObj('fpot',300,526,22,45);addObj('fpot',452,526,22,45);
     [[112,535],[380,535],[150,317],[385,401]].forEach(p=>addObj('bird',p[0],p[1],12,35,{hx:p[0],hy:p[1]}));
-    addObj('birdhouse',52,298,32,80);addObj('pot',452,392,22,45);addObj('lantern2',318,478,20,60);
+    addObj('birdhouse',52,298,32,80);addObj('fpot',452,392,22,45);addObj('lantern2',318,478,20,60);
     addObj('wcan',32,FLOOR-18,18,40);addObj('gnome',238,FLOOR-29,29,100);addObj('ball',428,637,15,40);
-    addObj('pot',370,FLOOR-22,22,45);
+    addObj('fpot',370,FLOOR-22,22,45);
   }}};
 let roomId=ROOMS[S.room]?S.room:'salon',room=ROOMS[roomId];
 
@@ -680,7 +687,7 @@ function knock(o,vx,vy,gen){
   beep(o.type==='pan'?rnd(900,1300):rnd(380,520),o.type==='pan'?0.2:0.06,o.type==='pan'?'triangle':'square',0.04);
 }
 const SOFT=['pillow','gift','book','laptop','remote','frame','plant','box','flour','monitor','keyboard','printer','lamp','papers','pencils','binder','trophy','cactus','clock','duck','bottle','soap','towels','tap','bigpillow','teddy','bunny','slipper','sock','storybooks','alarm','cbox','radio','suitcase','oldbooks','horse','gnome','wcan'];
-const COL={bigpillow:'#f5eede',teddy:'#b9744a',bunny:'#f3a6b3',lamp2:'#f7c08a',alarm:'#d94848',slipper:'#5d7fb3',sock:'#d94848',storybooks:'#5d7fb3',cbox:'#c9a06c',radio:'#8a5c40',suitcase:'#8a5c40',lantern:'#d8dbe6',oldbooks:'#8a5c40',horse:'#f1ece2',marbles:'#86d0ae',teapot:'#f1ece2',birdhouse:'#c97a4a',lantern2:'#f7c08a',pot:'#c97a4a',bird:'#b98558',gnome:'#d94848',wcan:'#5fa76a',ball:'#d94848',duck:'#f4c430',bottle:'#ee7f93',cup:'#9fd6c0',soap:'#ee7f93',towels:'#f39aab',tproll:'#f5eede',mirror:'#bfe0f5',tap:'#b9bdd0',monitor:'#55506a',keyboard:'#e9dcc3',printer:'#e9dcc3',lamp:'#5fae6a',papers:'#f5eede',pencils:'#f4b740',binder:'#c9634f',globe:'#7fb6d9',trophy:'#f4b740',cactus:'#6fae6a',clock:'#d8b56a',mug:'#f1ece2',book:'#c9634f',plant:'#6fae6a',frame:'#d8b56a',pillow:'#ee7f93',remote:'#444',yarn:'#ee7f93',vase:'#7fb6d9',laptop:'#aab',gift:'#e25b5b',bauble:'#f4b740',star:'#ffd75e',cake:'#f7c6d0',
+const COL={bigpillow:'#f5eede',teddy:'#b9744a',bunny:'#f3a6b3',lamp2:'#f7c08a',alarm:'#d94848',slipper:'#5d7fb3',sock:'#d94848',storybooks:'#5d7fb3',cbox:'#c9a06c',radio:'#8a5c40',suitcase:'#8a5c40',lantern:'#d8dbe6',oldbooks:'#8a5c40',horse:'#f1ece2',marbles:'#86d0ae',teapot:'#f1ece2',birdhouse:'#c97a4a',lantern2:'#f7c08a',fpot:'#c97a4a',bird:'#b98558',gnome:'#d94848',wcan:'#5fa76a',ball:'#d94848',duck:'#f4c430',bottle:'#ee7f93',cup:'#9fd6c0',soap:'#ee7f93',towels:'#f39aab',tproll:'#f5eede',mirror:'#bfe0f5',tap:'#b9bdd0',monitor:'#55506a',keyboard:'#e9dcc3',printer:'#e9dcc3',lamp:'#5fae6a',papers:'#f5eede',pencils:'#f4b740',binder:'#c9634f',globe:'#7fb6d9',trophy:'#f4b740',cactus:'#6fae6a',clock:'#d8b56a',mug:'#f1ece2',book:'#c9634f',plant:'#6fae6a',frame:'#d8b56a',pillow:'#ee7f93',remote:'#444',yarn:'#ee7f93',vase:'#7fb6d9',laptop:'#aab',gift:'#e25b5b',bauble:'#f4b740',star:'#ffd75e',cake:'#f7c6d0',
   plate:'#f1ece2',pan:'#55506a',pot:'#c9634f',flour:'#f5eede',jar:'#86d0ae',box:'#f4b740',bowl:'#7fb6d9'};
 function crash(o){
   o.y=FLOOR-o.r*0.5;o.rot=rnd(-.4,.4);
@@ -1263,7 +1270,7 @@ function render(){
     <button type="button" class="primary big" data-act="cont">${nl&&S.rounds?t('contBig',D.room[nl[0]][0],nl[1]+1):t('playBig')}</button>
     ${S.name?`<button type="button" data-act="home">${t('menuBtn')}</button><div class="coins">${t('totalStars',starSum(),ORDER.length*30)}</div>`:''}
     <div class="row" style="justify-content:center">${langBtn()}<button type="button" data-act="snd" style="padding:4px 10px;font-size:.8rem">${t('sound',S.sound)}</button><button type="button" data-act="mus" style="padding:4px 10px;font-size:.8rem">${t('music',S.music)}</button></div>
-    <p class="muted">${t('verNote')} · ${BUILD}</p>`;
+    <p class="muted">${window.Capacitor?'v1.0':t('verNote')+' · '+BUILD}</p>`;
   }else if(!S.name){
     sheet.className='sheet mid';
     h=`<div class="row"><img class="appicon" src="a/icon.webp" alt=""><div style="flex:1"><h1>${t('title')}</h1><div class="tag">Cat Chaos</div></div>${langBtn()}</div>

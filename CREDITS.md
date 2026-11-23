@@ -9,3 +9,9 @@ The owner decided on 23 November 2026 to keep this track and accept the open que
 ## Illustrations and sound effects
 
 Generated with Higgsfield for this game.
+
+The app icon was sharpened with Higgsfield's image upscaler.
+
+## Fonts
+
+Baloo 2 (Ek Type) and Nunito (Vernon Adams and the Nunito project authors), both under the SIL Open Font License 1.1. The font files in `f/` are the subsets served by Google Fonts.
