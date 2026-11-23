@@ -165,7 +165,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const INK='#2b2030';
 /* numer wydania: skrypt budujący podmienia 'dev' na znacznik czasu; strona sama sprawdza, czy jest nowsza wersja */
-const BUILD='261123.2043';
+const BUILD='261123.2055';
 if(BUILD!=='dev')try{fetch('version.txt?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(v=>{v=v.trim();
   if(v&&v!==BUILD&&!location.search.includes('v='+v))location.replace(location.pathname+'?v='+v)}).catch(()=>{})}catch(e){}
 
@@ -463,10 +463,7 @@ function sfx(n,vol=.6,rate=1){if(!S.sound)return true;
  const s=SFX[n];if(!s||!s.buf||!AC)return false;
   try{const src=AC.createBufferSource(),g=AC.createGain();src.buffer=s.buf;src.playbackRate.value=rate;g.gain.value=vol;src.connect(g).connect(AC.destination);src.start();return true}catch(e){return false}}
 let musicEl=null;
-const MUS={salon:'garden',kuchnia:'fridge',biuro:'walls'};
-function music(){try{const want=MUS[typeof roomId==='string'?roomId:'salon']||'garden';
-  if(!musicEl){musicEl=new Audio();musicEl.loop=true;musicEl.volume=.5}
-  if(musicEl.dataset.k!==want){musicEl.dataset.k=want;musicEl.src='s/m_'+want+'.mp3'}
+function music(){try{if(!musicEl){musicEl=new Audio('s/music.mp3');musicEl.loop=true;musicEl.volume=.28}
   if(S.music&&!document.hidden){const p=musicEl.play();if(p&&p.catch)p.catch(()=>{})}else musicEl.pause()}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(musicEl)music();if(document.hidden&&mode==='play'&&!paused){paused=true;render()}});
 document.addEventListener('keydown',e=>{if((e.key==='Escape'||e.key==='p'||e.key==='P')&&mode==='play'&&e.target.tagName!=='INPUT'){paused=!paused;render()}});
