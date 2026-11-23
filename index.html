@@ -165,14 +165,14 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const INK='#2b2030';
 /* numer wydania: skrypt budujący podmienia 'dev' na znacznik czasu; strona sama sprawdza, czy jest nowsza wersja */
-const BUILD='261123.2055';
+const BUILD='261123.2108';
 if(BUILD!=='dev')try{fetch('version.txt?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(v=>{v=v.trim();
   if(v&&v!==BUILD&&!location.search.includes('v='+v))location.replace(location.pathname+'?v='+v)}).catch(()=>{})}catch(e){}
 
 /* ---------- ilustracje ---------- */
-const AT={"cat":{"sit":[13,18,142,166],"walk":[197,25,172,151],"crouch":[400,55,173,121],"leap":[608,19,190,133],"hang":[18,212,132,231],"sleep":[189,278,172,122],"scared":[390,217,191,182],"zoom":[611,235,185,155]},"furn":{"sofa":[14,54,541,298],"tree":[594,6,305,413],"shelf":[926,192,395,77],"window":[31,414,177,298],"curtain":[254,408,204,316],"bed":[484,563,233,142],"fan":[751,480,352,209],"robot":[1152,599,157,81]},"props":{"mug0":[39,20,167,142],"mug1":[259,19,165,142],"mug2":[483,19,167,141],"mug3":[703,19,165,140],"book0":[947,6,123,165],"book1":[1174,6,123,165],"plant":[17,194,189,194],"laptop":[259,228,195,149],"vase":[486,180,159,209],"cake":[690,199,181,177],"frame0":[923,216,169,154],"frame1":[1156,216,160,152],"pillow":[29,415,160,140],"remote":[247,433,183,103],"yarn":[474,423,181,123],"gift0":[698,402,166,161],"gift1":[924,402,166,161],"star":[1153,397,165,156],"bauble0":[45,579,124,154],"bauble1":[272,579,123,154],"bauble2":[497,579,123,154],"bauble3":[719,579,123,154],"fish":[939,593,138,138],"catnip":[1156,571,157,174]},"kitchen":{"fridge":[28,17,237,448],"counter":[309,144,591,316],"cabinet":[933,144,395,251],"plate":[15,646,156,44],"plateup":[183,575,133,134],"pan":[329,503,116,205],"pot":[454,515,154,192],"flour":[622,568,106,140],"jar0":[743,581,91,128],"jar1":[845,581,105,128],"jar2":[961,562,93,147],"box":[1069,560,109,147],"bowl":[1192,618,136,90]},"people":{"babcia":[26,128,454,595],"dziecko":[452,253,405,470],"tata":[879,49,465,674]},"cat2":{"walk2":[13,31,162,139],"land":[203,41,187,131],"swat":[416,23,209,148],"lick":[646,23,130,153],"dizzy":[20,233,144,176],"wet":[193,278,196,133],"smug":[425,246,139,164],"guilty":[590,319,203,80]},"office":{"desk":[111,36,476,260],"chair":[678,9,209,289],"cabinet":[1011,10,198,286],"printer":[11,333,214,178],"monitor":[259,331,243,182],"keyboard":[534,442,230,44],"lamp":[775,331,177,176],"papers":[984,338,164,168],"pencils":[1199,342,134,164],"binder0":[60,545,66,189],"binder1":[195,545,66,188],"binder2":[330,545,67,188],"globe":[488,530,157,209],"trophy":[703,584,140,149],"cactus":[909,545,125,189],"clock":[1106,545,187,188]},"extra":{"tablecloth":[17,22,487,256],"table":[541,22,452,256],"lamp":[1038,20,290,237],"heap":[15,470,327,179],"bookcase":[392,312,183,422],"drawer":[629,418,354,262],"cables":[1039,352,269,380]},"debris":{"mug0":[25,58,284,134],"mug1":[354,58,285,134],"mug2":[694,57,282,135],"mug3":[1031,58,285,134],"plate":[32,294,257,149],"vase":[335,289,314,155],"bauble0":[703,282,270,154],"bauble1":[1041,282,274,154],"bauble2":[33,540,265,152],"bauble3":[349,540,266,152],"jar":[659,532,295,164],"cake":[1004,535,327,160]}};
+const AT={"cat":{"sit":[13,18,142,166],"walk":[197,25,172,151],"crouch":[400,55,173,121],"leap":[608,19,190,133],"hang":[18,212,132,231],"sleep":[189,278,172,122],"scared":[390,217,191,182],"zoom":[611,235,185,155]},"furn":{"sofa":[14,54,541,298],"tree":[594,6,305,413],"shelf":[926,192,395,77],"window":[31,414,177,298],"curtain":[254,408,204,316],"bed":[484,563,233,142],"fan":[751,480,352,209],"robot":[1152,599,157,81]},"props":{"mug0":[39,20,167,142],"mug1":[259,19,165,142],"mug2":[483,19,167,141],"mug3":[703,19,165,140],"book0":[947,6,123,165],"book1":[1174,6,123,165],"plant":[17,194,189,194],"laptop":[259,228,195,149],"vase":[486,180,159,209],"cake":[690,199,181,177],"frame0":[923,216,169,154],"frame1":[1156,216,160,152],"pillow":[29,415,160,140],"remote":[247,433,183,103],"yarn":[474,423,181,123],"gift0":[698,402,166,161],"gift1":[924,402,166,161],"star":[1153,397,165,156],"bauble0":[45,579,124,154],"bauble1":[272,579,123,154],"bauble2":[497,579,123,154],"bauble3":[719,579,123,154],"fish":[939,593,138,138],"catnip":[1156,571,157,174]},"kitchen":{"fridge":[28,17,237,448],"counter":[309,144,591,316],"cabinet":[933,144,395,251],"plate":[15,646,156,44],"plateup":[183,575,133,134],"pan":[329,503,116,205],"pot":[454,515,154,192],"flour":[622,568,106,140],"jar0":[743,581,91,128],"jar1":[845,581,105,128],"jar2":[961,562,93,147],"box":[1069,560,109,147],"bowl":[1192,618,136,90]},"people":{"babcia":[26,128,454,595],"dziecko":[452,253,405,470],"tata":[879,49,465,674]},"cat2":{"walk2":[13,31,162,139],"land":[203,41,187,131],"swat":[416,23,209,148],"lick":[646,23,130,153],"dizzy":[20,233,144,176],"wet":[193,278,196,133],"smug":[425,246,139,164],"guilty":[590,319,203,80]},"office":{"desk":[111,36,476,260],"chair":[678,9,209,289],"cabinet":[1011,10,198,286],"printer":[11,333,214,178],"monitor":[259,331,243,182],"keyboard":[534,442,230,44],"lamp":[775,331,177,176],"papers":[984,338,164,168],"pencils":[1199,342,134,164],"binder0":[60,545,66,189],"binder1":[195,545,66,188],"binder2":[330,545,67,188],"globe":[488,530,157,209],"trophy":[703,584,140,149],"cactus":[909,545,125,189],"clock":[1106,545,187,188]},"extra":{"tablecloth":[17,22,487,256],"table":[541,22,452,256],"lamp":[1038,20,290,237],"heap":[15,470,327,179],"bookcase":[392,312,183,422],"drawer":[629,418,354,262],"cables":[1039,352,269,380]},"bath":{"bubble":[108,19,29,28],"tub":[15,15,404,297],"sink":[435,33,282,279],"shower":[741,15,335,297],"basket":[1102,42,226,263],"mirror":[51,329,207,207],"tap":[315,346,183,142],"duck":[553,349,170,159],"tproll":[818,356,164,156],"towels":[1047,348,246,163],"bottle0":[44,556,94,182],"bottle1":[210,551,106,187],"bottle2":[387,560,98,178],"cup":[557,541,116,197],"soap":[723,627,195,101],"heap":[948,565,378,165]},"debris":{"mug0":[25,58,284,134],"mug1":[354,58,285,134],"mug2":[694,57,282,135],"mug3":[1031,58,285,134],"plate":[32,294,257,149],"vase":[335,289,314,155],"bauble0":[703,282,270,154],"bauble1":[1041,282,274,154],"bauble2":[33,540,265,152],"bauble3":[349,540,266,152],"jar":[659,532,295,164],"cake":[1004,535,327,160]}};
 const IM={};
-['bg_salon','bg_kuchnia','cat','cat_szary','cat_czarny','cat_maka','cat2','cat2_szary','cat2_czarny','cat2_maka','furn','props','kitchen','people','debris','bg_biuro','office','extra'].forEach(n=>{const i=new Image();i.onload=()=>{i.ok=true};i.src='a/'+n+'.webp';IM[n]=i});
+['bg_salon','bg_kuchnia','cat','cat_szary','cat_czarny','cat_maka','cat2','cat2_szary','cat2_czarny','cat2_maka','furn','props','kitchen','people','debris','bg_biuro','office','extra','bg_lazienka','bath'].forEach(n=>{const i=new Image();i.onload=()=>{i.ok=true};i.src='a/'+n+'.webp';IM[n]=i});
 let artOk=false;
 const ART=()=>artOk||(artOk=Object.values(IM).every(i=>i.ok));
 function sp(sheet,name,x,y,w,ax=.5,ay=1,img){const r=AT[sheet][name],h=w*r[3]/r[2];ctx.drawImage(img||IM[sheet],r[0],r[1],r[2],r[3],x-w*ax,y-h*ay,w,h);return h}
@@ -180,7 +180,8 @@ const OS={mug:['props',['mug0','mug1','mug2','mug3'],29,'b'],book:['props',['boo
   frame:['props',['frame0','frame1'],44,'c'],pillow:['props',['pillow'],38,'b'],remote:['props',['remote'],32,'b'],yarn:['props',['yarn'],34,'b'],gift:['props',['gift0','gift1'],36,'b'],star:['props',['star'],36,'c'],bauble:['props',['bauble0','bauble1','bauble2','bauble3'],19,'c'],
   plate:['kitchen',['plate'],38,'c'],pan:['kitchen',['pan'],31,'p'],pot:['kitchen',['pot'],44,'b'],flour:['kitchen',['flour'],32,'b'],jar:['kitchen',['jar0','jar1','jar2'],25,'b'],box:['kitchen',['box'],30,'b'],bowl:['kitchen',['bowl'],36,'b'],
   monitor:['office',['monitor'],60,'b'],keyboard:['office',['keyboard'],46,'b'],printer:['office',['printer'],52,'b'],lamp:['office',['lamp'],44,'b'],papers:['office',['papers'],40,'b'],pencils:['office',['pencils'],30,'b'],
-  binder:['office',['binder0','binder1','binder2'],20,'b'],globe:['office',['globe'],40,'b'],trophy:['office',['trophy'],36,'b'],cactus:['office',['cactus'],36,'b'],clock:['office',['clock'],42,'c']};
+  binder:['office',['binder0','binder1','binder2'],20,'b'],globe:['office',['globe'],40,'b'],trophy:['office',['trophy'],36,'b'],cactus:['office',['cactus'],36,'b'],clock:['office',['clock'],42,'c'],
+  duck:['bath',['duck'],30,'b'],bottle:['bath',['bottle0','bottle1','bottle2'],18,'b'],cup:['bath',['cup'],24,'b'],soap:['bath',['soap'],30,'b'],towels:['bath',['towels'],42,'b'],tproll:['bath',['tproll'],28,'b'],mirror:['bath',['mirror'],66,'c'],tap:['bath',['tap'],40,'c']};
 const DEB={mug:['mug0','mug1','mug2','mug3'],plate:['plate'],vase:['vase'],bauble:['bauble0','bauble1','bauble2','bauble3'],jar:['jar'],cake:['cake']},DEBW={mug:46,plate:46,vase:62,bauble:34,jar:48,cake:54};
 const NECK={walk2:[.72,.52],land:[.72,.66],swat:[.62,.52],lick:[.60,.56],smug:[.62,.56],sit:[.68,.56],walk:[.72,.52],crouch:[.72,.66],leap:[.74,.56],hang:[.50,.36],scared:[.66,.60],zoom:[.70,.62]};
 const HEAD={walk2:[.68,.12],land:[.72,.28],swat:[.60,.10],lick:[.56,.09],smug:[.50,.14],sit:[.56,.09],walk:[.68,.12],crouch:[.72,.28],leap:[.76,.12],hang:[.36,.06],scared:[.70,.36],zoom:[.72,.24]};
@@ -237,10 +238,10 @@ function drawCatArt(c){
 }
 function personArt(who,k,y){const w=who==='dziecko'?190:who==='tata'?225:215;sp('people',who,W+16-(w-10)*k,y-60+(who==='dziecko'?50:0),w,0,0)}
 function drawRoomArt(){
-  const kit=roomId==='kuchnia',off=roomId==='biuro',bedY=plats[BED.p].y;
-  if(kit)ctx.drawImage(IM.bg_kuchnia,-15,-91,510,911);else if(off)ctx.drawImage(IM.bg_biuro,0,-19,480,858);else ctx.drawImage(IM.bg_salon,0,-24,480,858);
+  const kit=roomId==='kuchnia',off=roomId==='biuro',bath=roomId==='lazienka',bedY=plats[BED.p].y;
+  if(kit)ctx.drawImage(IM.bg_kuchnia,-15,-91,510,911);else if(off)ctx.drawImage(IM.bg_biuro,0,-19,480,858);else if(bath)ctx.drawImage(IM.bg_lazienka,-20,-109,520,929);else ctx.drawImage(IM.bg_salon,0,-24,480,858);
   const wn=room.win;sp('furn','window',wn[0],wn[1],wn[2],.5,0);
-  if(!kit&&!off){ctx.fillStyle='rgba(160,190,255,.07)';ctx.beginPath();ctx.moveTo(52,366);ctx.lineTo(144,366);ctx.lineTo(250,FLOOR+60);ctx.lineTo(20,FLOOR+60);ctx.fill()}
+  if(roomId==='salon'){ctx.fillStyle='rgba(160,190,255,.07)';ctx.beginPath();ctx.moveTo(52,366);ctx.lineTo(144,366);ctx.lineTo(250,FLOOR+60);ctx.lineTo(20,FLOOR+60);ctx.fill()}
   if(CURT.type==='curtain'&&!curtain.fallen){const sw=cat.state==='curtain'?Math.sin(tNow*14)*.02:Math.sin(tNow*1.2)*.006,r=AT.furn.curtain;
     ctx.save();ctx.translate(71,182);ctx.transform(1,0,sw,1,0,0);ctx.drawImage(IM.furn,r[0],r[1],r[2],r[3],-64,0,128,246);ctx.restore();
     if(curtain.stress>0){ctx.strokeStyle='rgba(43,32,48,.7)';ctx.lineWidth=1.5;const n=Math.ceil(curtain.stress*4);for(let i=0;i<n;i++){const x=CURT.x1+12+(i*29)%76,y=230+(i*53)%170;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-3,y+22);ctx.moveTo(x+5,y+2);ctx.lineTo(x+2,y+24);ctx.stroke()}}}
@@ -260,9 +261,13 @@ function drawRoomArt(){
   else if(off){shadow(240,FLOOR+3,96);sp('office','desk',240,FLOOR+2,184);
     if(!curtain.fallen){const sw=cat.state==='curtain'?Math.sin(tNow*16)*2:0;sp('extra','cables',156+sw,634,56,.5,0)}
     else{ctx.save();ctx.translate(150,FLOOR-2);ctx.rotate(1.45);sp('extra','cables',0,0,52,.5,.5);ctx.restore()}}
+  else if(bath){
+    if(!curtain.fallen){const sw=cat.state==='curtain'?Math.sin(tNow*14)*.02:Math.sin(tNow*1.2)*.005,r=AT.bath.shower;ctx.save();ctx.translate(100,258);ctx.transform(1,0,sw,1,0,0);ctx.drawImage(IM.bath,r[0],r[1],r[2],r[3],-92,0,184,304);ctx.restore()}
+    shadow(127,FLOOR+4,116);sp('bath','tub',127,FLOOR+5,226);shadow(304,FLOOR+3,58);sp('bath','sink',304,FLOOR+2,112);
+    if(curtain.fallen)sp('bath','heap',226,FLOOR+6,128)}
   else{shadow(225,FLOOR+3,104);sp('furn','sofa',225,FLOOR+2,196)}
   if(mode==='play'&&!tut&&timeLeft<=7){ctx.fillStyle='rgba(244,183,64,'+(0.3+0.25*Math.sin(tNow*8))+')';ctx.beginPath();ctx.ellipse(BED.x,bedY-8,78,36,0,0,7);ctx.fill()}
-  if(off)sp('extra','drawer',BED.x,FLOOR+6,100);else sp('furn','bed',BED.x,bedY+10,kit?104:114);
+  if(off)sp('extra','drawer',BED.x,FLOOR+6,100);else if(bath){shadow(BED.x,FLOOR+3,52);sp('bath','basket',BED.x,FLOOR+4,100)}else sp('furn','bed',BED.x,bedY+10,kit?104:114);
   if(off){const on=cat.state==='ground'&&cat.plat&&cat.plat.chair,k=on?.4+.6*Math.abs(Math.cos(chairTh)):1,r=AT.office.chair,w=72,h=w*r[3]/r[2];shadow(345,FLOOR+3,34);ctx.drawImage(IM.office,r[0],r[1],r[2],r[3],345-w*k/2,FLOOR+2-h,w*k,h)}
   if(robot){shadow(robot.x,FLOOR+2,30);sp('furn','robot',robot.x,FLOOR+3,56);if(CHASE){ctx.fillStyle='#ee7f93';ctx.beginPath();ctx.arc(robot.x+robot.dir*16,FLOOR-13,3+Math.sin(tNow*10),0,7);ctx.fill()}}
   if(CURT.type==='curtain'&&curtain.fallen){const r=AT.furn.curtain;ctx.save();ctx.translate(86,FLOOR-12);ctx.rotate(1.42);ctx.drawImage(IM.furn,r[0],r[1],r[2],r[3],-28,-70,56,140);ctx.restore()}
@@ -275,7 +280,7 @@ function drawRoomArt(){
 /* ---------- zapis ---------- */
 const KEY='kto-to-zrobil-v2';
 const DEF={lang:'en',name:'',color:'rudy',xp:0,coins:0,rounds:0,streak:0,giftDay:'',treeFalls:0,tutDone:false,room:'salon',
-  up:{jump:0,paw:0,time:0,combo:0,sly:0},rooms:{salon:{best:0,stars:0},kuchnia:{best:0,stars:0},biuro:{best:0,stars:0}},lv:{salon:[],kuchnia:[],biuro:[]},music:true,
+  up:{jump:0,paw:0,time:0,combo:0,sly:0},rooms:{salon:{best:0,stars:0},kuchnia:{best:0,stars:0},biuro:{best:0,stars:0},lazienka:{best:0,stars:0}},lv:{salon:[],kuchnia:[],biuro:[],lazienka:[]},music:true,
   track:{tree:0,fan:0,curtain:0},trophies:{},acc:[],wear:'',album:[],sound:true};
 let S=JSON.parse(JSON.stringify(DEF));
 try{let r=localStorage.getItem(KEY);
@@ -289,7 +294,7 @@ const giftGap=()=>S.giftDay?Math.round((new Date(dayStr())-new Date(S.giftDay))/
 const level=()=>Math.floor(Math.sqrt(S.xp/60))+1, lvlStart=l=>60*(l-1)*(l-1);
 const rank=()=>{const l=level();return LG().ranks[l<3?0:l<6?1:l<10?2:3]};
 const tiedLevel=()=>Math.min(2,Math.floor(S.treeFalls/3));
-const ORDER=['salon','kuchnia','biuro'];
+const ORDER=['salon','kuchnia','biuro','lazienka'];
 const passed=id=>S.lv[id].filter(x=>x>0).length;
 const roomOpen=id=>{const i=ORDER.indexOf(id);return i<=0||passed(ORDER[i-1])>=7||S.rooms[ORDER[i-1]].stars>=2};
 const freeOpen=id=>passed(id)>=5;
@@ -299,13 +304,14 @@ const starSum=()=>ORDER.reduce((a,id)=>a+S.lv[id].reduce((x,y)=>x+(y||0),0),0);
 const LEVELS={
  salon:[[40,0,'knock',3,0,350],[40,0,'fish',6,0,1500],[45,0,'knock',6,0,900],[45,0,'fan',2,0,2000],[45,1,'baub',4,0,1200],[50,1,'curt',1,0,2000],[50,1,'combo',4,0,600],[50,2,'tree',1,0,3000],[55,2,'knock',12,0,3300],[60,2,'score',3500,0,4200]],
  kuchnia:[[40,0,'knock',4,0,1700],[40,0,'fish',8,0,1800],[45,0,'pans',2,0,1800],[45,1,'swing',2,0,3200],[45,1,'plates',4,1,1800],[50,1,'cloth',1,1,4000],[50,2,'prints',6,1,1000],[50,2,'combo',5,1,2400],[55,2,'knock',14,1,3400],[55,3,'score',5000,1,6500]],
- biuro:[[40,0,'knock',4,0,1400],[40,0,'paper',2,0,880],[45,1,'fish',10,0,2700],[45,1,'chair',2,0,700],[45,1,'globe',1,1,1100],[45,2,'monitor',1,1,800],[50,2,'cables',1,1,2100],[50,2,'combo',5,1,2400],[50,3,'knock',14,1,4900],[50,3,'score',7000,1,8500]]};
+ biuro:[[40,0,'knock',4,0,1400],[40,0,'paper',2,0,880],[45,1,'fish',10,0,2700],[45,1,'chair',2,0,700],[45,1,'globe',1,1,1100],[45,2,'monitor',1,1,800],[50,2,'cables',1,1,2100],[50,2,'combo',5,1,2400],[50,3,'knock',14,1,4900],[50,3,'score',7000,1,8500]],
+ lazienka:[[40,0,'knock',4,0,1500],[40,0,'fish',8,0,1300],[45,1,'bounce',3,0,900],[45,1,'ducks',2,0,1400],[45,1,'splash',2,1,1000],[45,2,'tp',1,1,400],[50,2,'shower',1,1,1000],[50,2,'combo',5,1,2400],[50,3,'knock',14,1,4500],[50,3,'score',4500,1,6000]]};
 const GOAL={knock:r=>r.knocked,fish:r=>r.fish,score:()=>score,fan:r=>r.fanTime,baub:r=>r.baubles,curt:r=>+r.curtainDown,combo:r=>r.maxCombo,tree:r=>+r.treeFell,pans:r=>r.pans,swing:r=>r.swingT,
-  plates:r=>r.plates,cloth:r=>+r.pulled,prints:r=>r.prints,paper:r=>r.paper,chair:r=>r.chairT,globe:r=>+r.globe,monitor:r=>+r.monitor,cables:r=>+r.pulled};
+  plates:r=>r.plates,cloth:r=>+r.pulled,prints:r=>r.prints,paper:r=>r.paper,chair:r=>r.chairT,globe:r=>+r.globe,monitor:r=>+r.monitor,cables:r=>+r.pulled,bounce:r=>r.bounces,ducks:r=>r.ducks,splash:r=>r.splash,tp:r=>+r.tp,shower:r=>+r.curtainDown};
 const mkLV=(id,i)=>{const d=LEVELS[id][i];return{room:id,i,time:d[0],peeks:d[1],type:d[2],n:d[3],haz:d[4],s3:d[5]}};
 const goalText=l=>LG().goal[l.type](l.n);
 
-const TRO={star:'⭐',bauble:'🔴',mouse:'🐭',sock:'🧦',fish:'🐠',bell:'🔔',remote:'📺',cake:'🍰',spoon:'🥄',magnet:'🧲',clip:'📎',pen:'🖊️'};
+const TRO={star:'⭐',bauble:'🔴',mouse:'🐭',sock:'🧦',fish:'🐠',bell:'🔔',remote:'📺',cake:'🍰',spoon:'🥄',magnet:'🧲',clip:'📎',pen:'🖊️',duck:'🦆',soap:'🧼'};
 const ACC=['bow','bell','hat'];
 const UP=['jump','paw','time','combo','sly'];
 /* ---------- języki: angielski domyślnie, polski jako drugi ---------- */
@@ -331,19 +337,20 @@ en:{
   accHint:'Accessories sometimes turn up in the courier parcel.',
   albumTitle:'Evidence',albumEmpty:'Empty. A photo lands here when you beat a room record or when Dad comes home with his phone.',
   pts:'pts',photoBy:' · photo: Dad',albumAlt:'Wrecked room',starsAria:n=>`${n} of 3 stars`,canvasAria:'Room where the cat makes a mess',quitAria:'Pause',meter:'Zoomies',
-  room:{salon:['Living Room','Christmas tree, ceiling fan, curtain and shelves full of mugs.'],kuchnia:['Kitchen','Swing on the lamp, pull the tablecloth, mind the wet floor. Your bed is on top of the fridge.'],biuro:['Home Office','Bookcases to climb, cables to yank and a robot vacuum that hunts you. Your bed is in the desk drawer.']},
+  room:{salon:['Living Room','Christmas tree, ceiling fan, curtain and shelves full of mugs.'],kuchnia:['Kitchen','Swing on the lamp, pull the tablecloth, mind the wet floor. Your bed is on top of the fridge.'],biuro:['Home Office','Bookcases to climb, cables to yank and a robot vacuum that hunts you. Your bed is in the desk drawer.'],lazienka:['Bathroom','Bounce on the bath foam, soak the floor with the tap and pull down the shower curtain. Your bed is the laundry basket.']},
   roomMeta:(s,p)=>`${s}-second round · the family peeks in ${p}×`,cSwing:'Tap to let go. Release on the upswing to fly far.',clothOff:'Tablecloth trick!',cablesOff:'Unplugged!',slip:'Whoa, slippery!',bonk:'Bonk! −60',
-  cKeyR:{salon:'Key in the door! Get back to your bed in the bottom-left corner!',kuchnia:'Key in the door! Climb back to your bed on top of the fridge!',biuro:'Key in the door! Get into the desk drawer. From the desk, aim downwards to drop through.'},
-  cPull:{curtain:'Hang on to the curtain! The rod is about to give.',cloth:'Keep pulling! The tablecloth is sliding off.',cables:'Keep pulling! The cables are coming loose.'},
+  cKeyR:{salon:'Key in the door! Get back to your bed in the bottom-left corner!',kuchnia:'Key in the door! Climb back to your bed on top of the fridge!',biuro:'Key in the door! Get into the desk drawer. From the desk, aim downwards to drop through.',lazienka:'Key in the door! Get into the laundry basket on the right. From the shelf above it, aim downwards.'},
+  cPull:{curtain:'Hang on to the curtain! The rod is about to give.',cloth:'Keep pulling! The tablecloth is sliding off.',cables:'Keep pulling! The cables are coming loose.',shower:'Hang on! The shower rail is about to give.'},
+  boing:'Boing!',splash:'Splash!',showerOff:'Shower curtain down!',squeak:'Squeak!',
   goal:{knock:n=>`Knock over ${n} things`,fish:n=>`Collect ${n} fish`,score:n=>`Score ${n} points`,fan:n=>`Spin on the fan for ${n} seconds`,baub:n=>`Knock ${n} baubles off the tree`,curt:()=>'Tear down the curtain',combo:n=>`Get a ×${n} combo`,tree:()=>'Topple the Christmas tree',
-    pans:n=>`Knock down ${n} pans`,swing:n=>`Swing on the lamp for ${n} seconds`,plates:n=>`Smash ${n} plates`,cloth:()=>'Pull the tablecloth off',prints:n=>`Spill the flour and leave ${n} paw prints`,paper:n=>`Print ${n} pages`,chair:n=>`Spin on the chair for ${n} seconds`,globe:()=>'Send the globe rolling',monitor:()=>'Knock the monitor off the desk',cables:()=>'Yank the cables off the desk'},
+    pans:n=>`Knock down ${n} pans`,swing:n=>`Swing on the lamp for ${n} seconds`,plates:n=>`Smash ${n} plates`,cloth:()=>'Pull the tablecloth off',prints:n=>`Spill the flour and leave ${n} paw prints`,paper:n=>`Print ${n} pages`,chair:n=>`Spin on the chair for ${n} seconds`,globe:()=>'Send the globe rolling',monitor:()=>'Knock the monitor off the desk',cables:()=>'Yank the cables off the desk',bounce:n=>`Bounce on the bath foam ${n} times`,ducks:n=>`Knock ${n} rubber ducks out of the bath`,splash:n=>`Turn the tap on ${n} times`,tp:()=>'Unroll the toilet paper',shower:()=>'Pull down the shower curtain'},
   lvName:(r,n)=>`${r} · Level ${n}`,lvShort:n=>`Level ${n}`,star1:'Reach the goal',star2:'Get back to your bed in time',star3:n=>`Do both and score ${n} points`,goalDone:'Goal done! Back to bed!',lvFail:"Time's up. The goal was not reached.",lvPass:'Level complete!',
   next:'Next level',retry:'Try again',freePlay:'Free play',freeLock:'Free play opens after level 5',roomLock:n=>`Finish 7 levels in the ${n} to open this room.`,levels:'Levels',goalLbl:'Goal',
   playBig:'Play',contBig:(r,n)=>`Continue · ${r} ${n}`,menuBtn:'Levels and upgrades',verNote:'Test build',paused:'Paused',resume:'Resume',restart:'Start over',quitHome:'Quit to menu',
   roomDone:n=>`<b>${n} complete!</b> All ten levels are done.`,allDone:'<b>You wrecked the whole house!</b> More rooms are on the way. Until then, go for three stars everywhere or try free play.',nextRoom:n=>`Next room: ${n}`,totalStars:(a,b)=>`★ ${a} / ${b}`,
   print:'Printing!',testSnd:'Test sound',sndHelp:'You should hear a meow. If not, check the mute switch on the side of the phone and the volume, then tap again.',wobble:'Wobbling… hit it again!',roomUp:n=>`<b>${n} unlocked!</b> A new room to wreck.`,lock:n=>`Earn 2 stars in the ${n} to get in.`,music:on=>`Music: ${on?'on':'off'}`,
   ranks:['Kitten','Youngster','Tomcat','Terror of the block'],
-  tro:{star:'Tree-top star',bauble:'Bauble (intact!)',mouse:'Toy mouse',sock:'Odd sock',fish:'Goldfish',bell:'Golden bell',remote:'TV remote',cake:'Cake crumb',spoon:'Silver teaspoon',magnet:'Fridge magnet',clip:'Paperclip chain',pen:'Fancy pen'},
+  tro:{star:'Tree-top star',bauble:'Bauble (intact!)',mouse:'Toy mouse',sock:'Odd sock',fish:'Goldfish',bell:'Golden bell',remote:'TV remote',cake:'Cake crumb',spoon:'Silver teaspoon',magnet:'Fridge magnet',clip:'Paperclip chain',pen:'Fancy pen',duck:'Squeaky duck',soap:'Lavender soap'},
   acc:{bow:'Bow tie',bell:'Bell',hat:'Santa hat'},
   up:{jump:['Springy paws','Higher, longer jumps'],paw:['Heavy paw','Knocked things fly further and hit more things'],time:['A longer walk','The round lasts 3 seconds longer'],combo:['Momentum','The combo fades more slowly'],sly:['Sharp ears','You hear footsteps earlier']},
   mis:{tree:'Topple the Christmas tree',baub:'Knock down 8 baubles',lap:'Send 2 messages from the laptop',flour:'Spill the flour',plates:'Smash 6 plates',pans:'Knock down 3 pans',prints:'Leave 12 floury paw prints',cloth:'Pull the tablecloth off the table',swing:'Swing on the lamp for 3 seconds',cables:'Yank the cables off the desk',paper:'Print 3 pages',monitor:'Knock the monitor off the desk',chair:'Spin on the office chair for 3 seconds',globe:'Send the globe rolling',curt:'Tear down the curtain',fan:'Spin on the fan for 3 seconds',fish:'Collect 18 fish',combo:'Get a ×8 combo',zoom:'Get the zoomies',knock:'Knock over 20 things',bed:'Finish the round in your bed',peek:"Don't get caught"},
@@ -379,19 +386,20 @@ pl:{
   accHint:'Dodatki trafiają się czasem w paczce od kuriera.',
   albumTitle:'Dowody zbrodni',albumEmpty:'Pusto. Zdjęcie trafia tu, gdy pobijesz rekord pokoju albo gdy wróci tata z telefonem.',
   pts:'pkt',photoBy:' · fot. tata',albumAlt:'Zdemolowany pokój',starsAria:n=>`${n} z 3 gwiazdek`,canvasAria:'Pokój, w którym kot robi bałagan',quitAria:'Pauza',meter:'Głupawka',
-  room:{salon:['Salon','Choinka, wiatrak, firanka i półki pełne kubków.'],kuchnia:['Kuchnia','Huśtaj się na lampie, ściągnij obrus, uważaj na mokrą podłogę. Legowisko jest na lodówce.'],biuro:['Biuro','Regały do wspinaczki, kable do wyrwania i odkurzacz, który na ciebie poluje. Legowisko jest w szufladzie biurka.']},
+  room:{salon:['Salon','Choinka, wiatrak, firanka i półki pełne kubków.'],kuchnia:['Kuchnia','Huśtaj się na lampie, ściągnij obrus, uważaj na mokrą podłogę. Legowisko jest na lodówce.'],biuro:['Biuro','Regały do wspinaczki, kable do wyrwania i odkurzacz, który na ciebie poluje. Legowisko jest w szufladzie biurka.'],lazienka:['Łazienka','Skacz po pianie w wannie, zalej podłogę z kranu i zerwij zasłonę prysznicową. Legowisko jest w koszu na pranie.']},
   roomMeta:(s,p)=>`Runda ${s} s · domownicy zaglądają ${p}×`,cSwing:'Stuknij, żeby się puścić. Puść się w górze wahnięcia, żeby polecieć daleko.',clothOff:'Numer z obrusem!',cablesOff:'Odłączone!',slip:'Ups, ślisko!',bonk:'Bęc! −60',
-  cKeyR:{salon:'Klucz w zamku! Wracaj na legowisko w lewym dolnym rogu!',kuchnia:'Klucz w zamku! Wspinaj się na legowisko na lodówce!',biuro:'Klucz w zamku! Wracaj do szuflady. Z biurka celuj w dół, żeby zeskoczyć pod blat.'},
-  cPull:{curtain:'Trzymaj się firanki! Karnisz zaraz puści.',cloth:'Ciągnij dalej! Obrus już się zsuwa.',cables:'Ciągnij dalej! Kable zaraz puszczą.'},
+  cKeyR:{salon:'Klucz w zamku! Wracaj na legowisko w lewym dolnym rogu!',kuchnia:'Klucz w zamku! Wspinaj się na legowisko na lodówce!',biuro:'Klucz w zamku! Wracaj do szuflady. Z biurka celuj w dół, żeby zeskoczyć pod blat.',lazienka:'Klucz w zamku! Wracaj do kosza na pranie po prawej. Z półki nad nim celuj w dół.'},
+  cPull:{curtain:'Trzymaj się firanki! Karnisz zaraz puści.',cloth:'Ciągnij dalej! Obrus już się zsuwa.',cables:'Ciągnij dalej! Kable zaraz puszczą.',shower:'Trzymaj się! Drążek prysznica zaraz puści.'},
+  boing:'Hop!',splash:'Chlup!',showerOff:'Zasłona prysznicowa leży!',squeak:'Kwak!',
   goal:{knock:n=>`Strąć ${n} rzeczy`,fish:n=>`Zbierz ${n} rybek`,score:n=>`Zdobądź ${n} punktów`,fan:n=>`Kręć się na wiatraku ${n} sekundy`,baub:n=>`Strąć ${n} bombki z choinki`,curt:()=>'Zerwij firankę',combo:n=>`Zrób kombo ×${n}`,tree:()=>'Przewróć choinkę',
-    pans:n=>`Zrzuć ${n} patelnie`,swing:n=>`Huśtaj się na lampie ${n} sekundy`,plates:n=>`Stłucz ${n} talerze`,cloth:()=>'Ściągnij obrus',prints:n=>`Rozsyp mąkę i zostaw ${n} śladów łap`,paper:n=>`Wydrukuj ${n} strony`,chair:n=>`Kręć się na fotelu ${n} sekundy`,globe:()=>'Puść globus w ruch',monitor:()=>'Zrzuć monitor z biurka',cables:()=>'Wyrwij kable z biurka'},
+    pans:n=>`Zrzuć ${n} patelnie`,swing:n=>`Huśtaj się na lampie ${n} sekundy`,plates:n=>`Stłucz ${n} talerze`,cloth:()=>'Ściągnij obrus',prints:n=>`Rozsyp mąkę i zostaw ${n} śladów łap`,paper:n=>`Wydrukuj ${n} strony`,chair:n=>`Kręć się na fotelu ${n} sekundy`,globe:()=>'Puść globus w ruch',monitor:()=>'Zrzuć monitor z biurka',cables:()=>'Wyrwij kable z biurka',bounce:n=>`Odbij się od piany w wannie ${n} razy`,ducks:n=>`Wyrzuć z wanny ${n} gumowe kaczki`,splash:n=>`Odkręć kran ${n} razy`,tp:()=>'Rozwiń papier toaletowy',shower:()=>'Zerwij zasłonę prysznicową'},
   lvName:(r,n)=>`${r} · Poziom ${n}`,lvShort:n=>`Poziom ${n}`,star1:'Wykonaj cel',star2:'Zdąż wrócić na legowisko',star3:n=>`Zrób jedno i drugie i zdobądź ${n} punktów`,goalDone:'Cel wykonany! Wracaj na legowisko!',lvFail:'Koniec czasu. Cel nie został wykonany.',lvPass:'Poziom zaliczony!',
   next:'Następny poziom',retry:'Spróbuj ponownie',freePlay:'Gra dowolna',freeLock:'Gra dowolna otwiera się po poziomie 5',roomLock:n=>`Zalicz 7 poziomów w pokoju ${n}, żeby otworzyć ten pokój.`,levels:'Poziomy',goalLbl:'Cel',
   playBig:'Graj',contBig:(r,n)=>`Dalej · ${r} ${n}`,menuBtn:'Poziomy i ulepszenia',verNote:'Wersja testowa',paused:'Pauza',resume:'Wróć do gry',restart:'Zacznij od nowa',quitHome:'Wyjdź do menu',
   roomDone:n=>`<b>${n}: komplet!</b> Wszystkie dziesięć poziomów zaliczone.`,allDone:'<b>Cały dom zdemolowany!</b> Kolejne pokoje są w drodze. Do tego czasu zbieraj po trzy gwiazdki albo zagraj w grę dowolną.',nextRoom:n=>`Następny pokój: ${n}`,totalStars:(a,b)=>`★ ${a} / ${b}`,
   print:'Drukuję!',testSnd:'Test dźwięku',sndHelp:'Powinno być słychać miauknięcie. Jeśli nie, sprawdź przełącznik wyciszenia z boku telefonu i głośność, potem stuknij ponownie.',wobble:'Chwieje się… jeszcze raz!',roomUp:n=>`<b>${n}: nowy pokój odblokowany!</b>`,lock:n=>`Zdobądź 2 gwiazdki w pokoju ${n}, żeby tu wejść.`,music:on=>`Muzyka: ${on?'wł.':'wył.'}`,
   ranks:['Kociak','Podrostek','Kocur','Postrach osiedla'],
-  tro:{star:'Gwiazda z choinki',bauble:'Bombka (cała!)',mouse:'Mysz-zabawka',sock:'Skarpetka nie do pary',fish:'Złota rybka',bell:'Złoty dzwoneczek',remote:'Pilot od telewizora',cake:'Okruch tortu',spoon:'Srebrna łyżeczka',magnet:'Magnes z lodówki',clip:'Łańcuszek ze spinaczy',pen:'Eleganckie pióro'},
+  tro:{star:'Gwiazda z choinki',bauble:'Bombka (cała!)',mouse:'Mysz-zabawka',sock:'Skarpetka nie do pary',fish:'Złota rybka',bell:'Złoty dzwoneczek',remote:'Pilot od telewizora',cake:'Okruch tortu',spoon:'Srebrna łyżeczka',magnet:'Magnes z lodówki',clip:'Łańcuszek ze spinaczy',pen:'Eleganckie pióro',duck:'Piszcząca kaczka',soap:'Lawendowe mydło'},
   acc:{bow:'Muszka',bell:'Dzwoneczek',hat:'Czapka Mikołaja'},
   up:{jump:['Sprężyste łapy','Wyższy i dalszy skok'],paw:['Ciężka łapa','Strącone rzeczy lecą dalej i potrącają kolejne'],time:['Długi spacer domowników','Runda dłuższa o 3 sekundy'],combo:['Rozpęd','Kombo wygasa wolniej'],sly:['Czujne uszy','Wcześniej słyszysz kroki']},
   mis:{tree:'Przewróć choinkę',baub:'Zrzuć 8 bombek',lap:'Wyślij 2 wiadomości z laptopa',flour:'Rozsyp mąkę',plates:'Stłucz 6 talerzy',pans:'Zrzuć 3 patelnie',prints:'Zostaw 12 śladów łap w mące',cloth:'Ściągnij obrus ze stołu',swing:'Huśtaj się na lampie 3 sekundy',cables:'Wyrwij kable z biurka',paper:'Wydrukuj 3 strony',monitor:'Zrzuć monitor z biurka',chair:'Kręć się na fotelu 3 sekundy',globe:'Puść globus w ruch',curt:'Zerwij firankę',fan:'Kręć się na wiatraku 3 sekundy',fish:'Zbierz 18 rybek',combo:'Zrób kombo ×8',zoom:'Wpadnij w głupawkę',knock:'Strąć 20 rzeczy',bed:'Zakończ rundę na legowisku',peek:'Nie daj się przyłapać'},
@@ -516,6 +524,20 @@ const ROOMS={
     addObj('cactus',410,386,16,60);addObj('globe',410,458,18,90);addObj('plant',394,529,17,60);addObj('binder',434,530,16,25);[390,412,434].forEach(x=>addObj('binder',x,601,16,25));
     addObj('mug',166,621,11,30,{pull:true});addObj('book',40,389,13,20);addObj('book',100,389,13,20);addObj('pencils',436,604,13,35);addObj('book',380,389,13,20);
     addObj('clock',140,250,19,60);addObj('frame',340,250,19,50);addObj('mug',196,319,11,30);addObj('book',236,317,13,20);addObj('book',258,317,13,20);addObj('vase',288,313,16,80);
+  }},
+ lazienka:{mult:2.8,stars:[3500,5500,7500],time:50,peeks:3,warn:-.3,
+  plats:[[40,214,640,'bounce'],[262,346,618],[376,464,632],[372,462,500],[250,350,400],[196,290,300],[330,430,270]],
+  shelf:[3,4,5,6],tree:null,robot:null,fan:null,
+  curt:{x1:24,x2:176,y1:286,y2:548,type:'shower',t:2},bed:{x:420,p:3,x1:380,x2:460},win:[240,108,78],puddle:[238,378],light:[240,150],
+  fish:[[127,500],[127,400],[240,560],[304,560],[420,560],[300,350],[240,270],[380,220],[420,440],[90,220],[180,220],[330,470]],
+  build(){
+    [80,127,174].forEach(x=>addObj('duck',x,627,13,40));
+    addObj('tap',304,582,16,50,{lcd:0});addObj('mirror',304,492,30,80);
+    addObj('bottle',392,483,17,25);addObj('bottle',418,483,17,25);addObj('tproll',446,487,13,30);
+    addObj('cup',268,384,16,35);addObj('soap',300,392,8,20);addObj('bottle',332,383,17,25);
+    addObj('towels',226,286,14,30);addObj('plant',268,283,17,60);
+    addObj('bottle',350,253,17,25);addObj('bottle',378,253,17,25);addObj('cup',408,254,16,35);
+    addObj('frame',70,200,19,50);addObj('frame',436,170,19,50);addObj('bottle',274,601,17,25);addObj('bottle',336,601,17,25);addObj('duck',430,257,13,40);addObj('towels',200,FLOOR-14,14,30);addObj('soap',226,292,8,20);
   }}};
 let roomId=ROOMS[S.room]?S.room:'salon',room=ROOMS[roomId];
 
@@ -530,13 +552,13 @@ const TUTN=['1 / 3','2 / 3','3 / 3'];
 function addObj(type,x,y,r,pts,ex){const o=Object.assign({type,x,y,r,pts,state:'static',vx:0,vy:0,rot:0,spin:0,hue:Math.random()},ex||{});objs.push(o);return o}
 function setup(){
   room=ROOMS[roomId];
-  plats=[{x1:0,x2:W,y:FLOOR}].concat(room.plats.map(p=>({x1:p[0],x2:p[1],y:p[2],chair:p[3]==='chair'})));
+  plats=[{x1:0,x2:W,y:FLOOR}].concat(room.plats.map(p=>({x1:p[0],x2:p[1],y:p[2],chair:p[3]==='chair',bounce:p[3]==='bounce'})));
   objs=[];parts=[];texts=[];prints=[];fishes=[];
   FAN=room.fan||null;CURT=room.curt;BED=room.bed;swing={th:0,w:0};
   PUD=LV?(LV.haz&&room.puddle||null):(room.puddle||null);CHASE=LV?!!(LV.haz&&room.chase):!!room.chase;goalDone=false;
   roundT=(LV?LV.time:room.time)+3*S.up.time;score=0;timeLeft=roundT;combo=0;lastKnock=-9;shake=0;slow=0;flash=0;idle=0;intro=0;zm=0;zoom=0;peek=null;floured=0;fishT=0;misT=0;catnip=null;
   nipAt=rnd(16,34);
-  rs={baubles:0,fanTime:0,curtainDown:false,knocked:0,inBed:false,treeFell:false,found:[],fish:0,maxCombo:0,zooms:0,peeks:0,caught:0,laptop:0,plates:0,pans:0,prints:0,flour:false,ended:false,used:{},paper:0,monitor:false,chairT:0,globe:false,pulled:false,swingT:0};
+  rs={baubles:0,fanTime:0,curtainDown:false,knocked:0,inBed:false,treeFell:false,found:[],fish:0,maxCombo:0,zooms:0,peeks:0,caught:0,laptop:0,plates:0,pans:0,prints:0,flour:false,ended:false,used:{},paper:0,monitor:false,chairT:0,globe:false,pulled:false,swingT:0,bounces:0,ducks:0,splash:0,tp:false};
   tree=room.tree?{a:0,av:0,stress:0,limit:4+tiedLevel()*2,falling:false,fallen:false,bx:room.tree.bx,h:room.tree.h,hw:room.tree.hw}:null;
   fan={th:0,w:2};curtain={stress:0,fallen:false,tear:0};
   robot=room.robot&&(CHASE||(!LV&&Math.random()<0.3))?{x:room.robot[0]+30,dir:1,w:50,a:room.robot[0]+26,b:room.robot[1]-26}:null;
@@ -592,20 +614,21 @@ function knock(o,vx,vy,gen){
   if(tut)tut.knocked=true;
   beep(o.type==='pan'?rnd(900,1300):rnd(380,520),o.type==='pan'?0.2:0.06,o.type==='pan'?'triangle':'square',0.04);
 }
-const SOFT=['pillow','gift','book','laptop','remote','frame','plant','box','flour','monitor','keyboard','printer','lamp','papers','pencils','binder','trophy','cactus','clock'];
-const COL={monitor:'#55506a',keyboard:'#e9dcc3',printer:'#e9dcc3',lamp:'#5fae6a',papers:'#f5eede',pencils:'#f4b740',binder:'#c9634f',globe:'#7fb6d9',trophy:'#f4b740',cactus:'#6fae6a',clock:'#d8b56a',mug:'#f1ece2',book:'#c9634f',plant:'#6fae6a',frame:'#d8b56a',pillow:'#ee7f93',remote:'#444',yarn:'#ee7f93',vase:'#7fb6d9',laptop:'#aab',gift:'#e25b5b',bauble:'#f4b740',star:'#ffd75e',cake:'#f7c6d0',
+const SOFT=['pillow','gift','book','laptop','remote','frame','plant','box','flour','monitor','keyboard','printer','lamp','papers','pencils','binder','trophy','cactus','clock','duck','bottle','soap','towels','tap'];
+const COL={duck:'#f4c430',bottle:'#ee7f93',cup:'#9fd6c0',soap:'#ee7f93',towels:'#f39aab',tproll:'#f5eede',mirror:'#bfe0f5',tap:'#b9bdd0',monitor:'#55506a',keyboard:'#e9dcc3',printer:'#e9dcc3',lamp:'#5fae6a',papers:'#f5eede',pencils:'#f4b740',binder:'#c9634f',globe:'#7fb6d9',trophy:'#f4b740',cactus:'#6fae6a',clock:'#d8b56a',mug:'#f1ece2',book:'#c9634f',plant:'#6fae6a',frame:'#d8b56a',pillow:'#ee7f93',remote:'#444',yarn:'#ee7f93',vase:'#7fb6d9',laptop:'#aab',gift:'#e25b5b',bauble:'#f4b740',star:'#ffd75e',cake:'#f7c6d0',
   plate:'#f1ece2',pan:'#55506a',pot:'#c9634f',flour:'#f5eede',jar:'#86d0ae',box:'#f4b740',bowl:'#7fb6d9'};
 function crash(o){
   o.y=FLOOR-o.r*0.5;o.rot=rnd(-.4,.4);
   if(o.type==='globe')rs.globe=true;
   if(o.type==='papers')for(let i=0;i<16;i++)parts.push({x:o.x,y:FLOOR-10,vx:rnd(-260,260),vy:rnd(-420,-120),life:rnd(.9,1.6),color:'#f5eede',s:rnd(9,13),rot:rnd(0,6),g:420});
   if(o.type==='monitor')rs.monitor=true;
-  if(o.type==='yarn'||o.type==='globe'){o.state='roll';o.y=FLOOR-o.r;o.vx=(o.vx<0?-1:1)*Math.max(Math.abs(o.vx),200);o.minX=o.maxX=o.x;o.acc=0;addScore(o.pts,o.x,o.y-20);return}
+  if(o.type==='tproll')rs.tp=true;
+  if(o.type==='yarn'||o.type==='globe'||o.type==='tproll'){o.state='roll';o.y=FLOOR-o.r;o.vx=(o.vx<0?-1:1)*Math.max(Math.abs(o.vx),200);o.minX=o.maxX=o.x;o.acc=0;addScore(o.pts,o.x,o.y-20);return}
   o.state='done';rs.knocked++;addMeter(6);
   const soft=SOFT.includes(o.type);
   if(o.type==='pan'){sfx('pan',.55,rnd(.9,1.1))||beep(520,0.35,'triangle',0.09,-200)}
   else if(soft){sfx('thud',.7,rnd(.85,1.15))||beep(140,0.09,'sine',0.08,-60)}
-  else{sfx(o.type==='bauble'||o.type==='jar'?'glass':'ceramic',.45,rnd(.9,1.15))||beep(rnd(700,1100),0.14,'square',0.05,-400)}
+  else{sfx(o.type==='bauble'||o.type==='jar'||o.type==='mirror'?'glass':'ceramic',.45,rnd(.9,1.15))||beep(rnd(700,1100),0.14,'square',0.05,-400)}
   burst(o.x,FLOOR-6,COL[o.type]||'#fff',soft?5:11);dust(o.x,FLOOR-4,4);
   if(o.pts>=80)shake=Math.max(shake,.15);
   addScore(o.pts,o.x,o.y-24,o.type==='cake'?t('cake'):o.type==='pot'?t('soup'):'');
@@ -614,9 +637,10 @@ function crash(o){
   else if(o.type==='cake')trophy('cake',o.x,o.y);
   else if(o.type==='plate')rs.plates++;
   else if(o.type==='pan')rs.pans++;
+  else if(o.type==='duck'){rs.ducks++;say(o.x,o.y-50,t('squeak'),'#ffd75e');beep(1500,0.12,'square',0.05,500)}
   else if(o.type==='flour'){rs.flour=true;floured=12;for(let i=0;i<34;i++)parts.push({x:o.x+rnd(-20,20),y:FLOOR-rnd(0,40),vx:rnd(-150,150),vy:rnd(-220,-20),life:rnd(.7,1.5),color:'rgba(255,255,255,.75)',s:rnd(7,15),round:true,g:60});say(o.x,FLOOR-90,t('flourCat'),'#fff')}
   else if(o.type==='remote'&&Math.random()<0.5)trophy('remote',o.x,o.y);
-  if(!['bauble','star','cake'].includes(o.type)&&Math.random()<0.1){const r=Math.random();const k=roomId==='biuro'?(r<.45?'clip':r<.8?'pen':r<.95?'fish':'bell'):roomId==='kuchnia'?(r<.45?'spoon':r<.8?'magnet':r<.95?'fish':'bell'):(r<.5?'mouse':r<.8?'sock':r<.95?'fish':'bell');score+=k==='fish'?120:k==='bell'?300:50;trophy(k,o.x,o.y)}
+  if(!['bauble','star','cake'].includes(o.type)&&Math.random()<0.1){const r=Math.random();const k=roomId==='lazienka'?(r<.45?'duck':r<.8?'soap':r<.95?'fish':'bell'):roomId==='biuro'?(r<.45?'clip':r<.8?'pen':r<.95?'fish':'bell'):roomId==='kuchnia'?(r<.45?'spoon':r<.8?'magnet':r<.95?'fish':'bell'):(r<.5?'mouse':r<.8?'sock':r<.95?'fish':'bell');score+=k==='fish'?120:k==='bell'?300:50;trophy(k,o.x,o.y)}
   if(o.type==='vase'||o.type==='pot'||o.type==='bowl')o.puddle=o.type==='pot'?'rgba(226,130,70,.7)':'rgba(140,200,235,.55)';
 }
 function fellTree(){
@@ -644,7 +668,7 @@ function endAim(e){
   const d=Math.hypot(a.x0-a.x,a.y0-a.y);
   if(d<10){ if(cat.state==='ground'&&!(robot&&cat.plat===robot.plat)){const pl=cat.plat;cat.tx=pl===plats[0]?clamp(a.x,24,W-24):clamp(a.x,pl.x1+8,pl.x2-8);if(tut)tut.walked=true} return}
   aim=a;const v=aimVel();aim=null;
-  cat.vx=v.vx;cat.vy=v.vy;cat.face=v.vx<0?-1:1;cat.tx=null;
+  cat.vx=v.vx;cat.vy=v.vy;cat.face=v.vx<0?-1:1;cat.tx=null;cat.bn=0;
   if(cat.state==='ground'&&cat.plat&&cat.plat.chair&&(cat.spinT||0)>.8){cat.rocket=1.3;say(cat.x,cat.y-30,t('launch'),'#ffd75e')}
   if(cat.state==='ground'&&v.vy>0)cat.y+=2;
   if(cat.state==='ground')dust(cat.x,cat.y+CR,3);
@@ -667,6 +691,8 @@ function releaseFan(auto){
   beep(300,0.3,'sawtooth',0.06,900);
 }
 function hitObj(o,vx,vy){
+  if(o.type==='tap'){if(o.lcd>0)return;o.lcd=.9;rs.splash++;addScore(50,o.x,o.y-40,t('splash'));beep(700,0.25,'sine',0.06,-400);
+    for(let i=0;i<14;i++)parts.push({x:o.x+8,y:o.y+10,vx:rnd(-140,160),vy:rnd(-260,-40),life:rnd(.5,1),color:'#9fd4f5',s:rnd(3,6),round:true,g:800});return}
   if(o.type==='printer'&&o.hits<3){if(o.lcd>0)return;o.hits++;o.lcd=.8;rs.paper++;addScore(50,o.x,o.y-44,t('print'));beep(240,0.25,'sawtooth',0.03,60);
     for(let i=0;i<5;i++)parts.push({x:o.x,y:o.y,vx:rnd(-220,220),vy:rnd(-380,-160),life:rnd(.9,1.5),color:'#f5eede',s:rnd(9,13),rot:rnd(0,6),g:500});return}
   if(o.type==='laptop'&&o.hits<2){ if(o.lcd>0)return; o.hits++;o.lcd=1;rs.laptop++;used('laptop');
@@ -737,6 +763,9 @@ function step(dt){
     let land=null;const fy=c.y+CR;
     if(c.vy>=0)for(const p of plats){if(py<=p.y+.01&&fy>=p.y&&c.x>p.x1-6&&c.x<p.x2+6&&(!land||p.y<land.y))land=p}
     if(!land&&fy>FLOOR)land=plats[0];
+    if(land&&land.bounce&&(c.bn||0)<3&&c.dizzy<=0){c.bn=(c.bn||0)+1;c.y=land.y-CR;c.vy=-(zoom>0?1080:1000);c.vx=Math.abs(c.vx)<70?(Math.random()<.5?-1:1)*rnd(90,170):c.vx*.8;rs.bounces++;c.squash=.12;c.cd=.9;
+      const bv=Math.round(15*(room.mult||1))*(zoom>0?2:1);score+=bv;say(c.x,c.y-40,t('boing')+' +'+bv,'#bfe0f5');beep(260+c.bn*90,0.14,'sine',0.07,300);
+      for(let i=0;i<10;i++)parts.push({x:c.x+rnd(-24,24),y:land.y,vx:rnd(-120,120),vy:rnd(-260,-60),life:rnd(.5,1),color:'rgba(214,235,255,.9)',s:rnd(5,10),round:true,g:300});land=null}
     if(land){const lvx=c.vx;c.y=land.y-CR;c.vx=0;c.vy=0;c.state='ground';c.plat=land;c.rocket=0;c.squash=.2;c.idleT=0;c.spinT=0;if(PUD&&land===plats[0]&&c.x>PUD[0]&&c.x<PUD[1]&&Math.abs(lvx)>60){c.tx=clamp(c.x+(lvx<0?-1:1)*130,24,W-24);c.slipCd=1.6;c.slip=.8;say(c.x,c.y-40,t('slip'),'#7fb6d9')}dust(c.x,land.y,4);print(c.x-6,land.y);print(c.x+8,land.y);if(c.dizzyNext){c.dizzy=1;c.dizzyNext=false}beep(160,0.05,'sine',0.05)}
     else{
       if(FAN&&c.fanCd<=0&&Math.abs(c.x-FAN.x)<FAN.r+6&&c.y>FAN.y-18&&c.y<FAN.y+42){
@@ -748,7 +777,7 @@ function step(dt){
           burst(c.x,c.y,'#3f9a67',6,.6);
           objs.forEach(o=>{if(o.att&&o.type==='bauble'&&Math.hypot(o.rx-c.rel.rx,o.rh-c.rel.h)<46)knock(o,rnd(-140,140),rnd(-160,-40))});
           if(tree.stress>=tree.limit){tree.falling=true;tree.av=-.3;c.state='air';c.vx=-240;c.vy=-380;c.cd=1;slow=.5}}}
-      if(c.state==='air'&&!curtain.fallen&&c.cd<=0&&c.x>CURT.x1&&c.x<CURT.x2+6&&c.y>CURT.y1+10&&c.y<CURT.y2){c.state='curtain';c.vx=c.vy=0;if(CURT.type==='curtain')S.track.curtain++;used('curtain');c.rocket=0}
+      if(c.state==='air'&&!curtain.fallen&&c.cd<=0&&(CURT.type!=='shower'||c.vy<150)&&c.x>CURT.x1&&c.x<CURT.x2+6&&c.y>CURT.y1+10&&c.y<CURT.y2){c.state='curtain';c.vx=c.vy=0;if(CURT.type==='curtain')S.track.curtain++;used('curtain');c.rocket=0}
       if(c.state==='air'&&room.swing&&c.fanCd<=0){const L=room.swing.L,bx=room.swing.x+L*Math.sin(swing.th),by=CEIL+L*Math.cos(swing.th);
         if(Math.hypot(c.x-bx,c.y-by)<36){c.state='swing';c.fanT=0;swing.w+=clamp(c.vx/L*.7,-2.5,2.5);used('swing');c.rocket=0;beep(260,0.1,'triangle',0.06)}}
     }
@@ -767,10 +796,10 @@ function step(dt){
     if(tree.falling){c.state='air';c.vx=-200;c.vy=-300;c.cd=1}
     else{const p=treePt(c.rel.rx,c.rel.h);c.x=p.x;c.y=p.y}
   }else if(c.state==='curtain'){
-    c.y+=(CURT.type==='curtain'?38:5)*dt;curtain.stress+=dt;curtain.tear+=dt;
+    c.y+=(CURT.type==='curtain'||CURT.type==='shower'?38:5)*dt;curtain.stress+=dt;curtain.tear+=dt;
     if(curtain.tear>.3){curtain.tear=0;score+=10;say(c.x+30,c.y-30,t('rip'),'#fff');beep(rnd(200,260),0.07,'sawtooth',0.03)}
     if(curtain.stress>=CURT.t){curtain.fallen=true;c.state='air';c.vy=0;c.cd=.3;shake=.3;addMeter(25);const cx=(CURT.x1+CURT.x2)/2;
-      if(CURT.type==='curtain'){rs.curtainDown=true;addScore(200,130,400,t('rod'));beep(120,0.3,'sawtooth',0.09,-50)}
+      if(CURT.type==='curtain'||CURT.type==='shower'){rs.curtainDown=true;addScore(200,cx+50,CURT.y1+120,t(CURT.type==='shower'?'showerOff':'rod'));beep(120,0.3,'sawtooth',0.09,-50)}
       else{rs.pulled=true;addScore(250,cx+40,CURT.y1-60,t(CURT.type==='cloth'?'clothOff':'cablesOff'));beep(180,0.25,'sawtooth',0.08,-80);c.vx=160;c.vy=-260;
         objs.forEach(o=>{if(o.pull&&o.state==='static'){if(o.hits!=null)o.hits=9;knock(o,rnd(60,260),rnd(-300,-120))}})}
       dust(cx,FLOOR-4,8)}
@@ -1089,7 +1118,7 @@ function draw(){
   ctx.save();if(shake>0&&!reduceMotion)ctx.translate(rnd(-6,6)*shake*2,rnd(-6,6)*shake*2);
   if(ART())drawRoomArt();else{ctx.fillStyle='#24454c';ctx.fillRect(0,0,W,H)}
   ctx.fillStyle='rgba(255,255,255,.8)';for(const p of prints){ctx.beginPath();ctx.ellipse(p.x,p.y-1.5,4,2,0,0,7);ctx.ellipse(p.x-4,p.y-4.5,1.5,1.2,0,0,7);ctx.ellipse(p.x,p.y-5.5,1.5,1.2,0,0,7);ctx.ellipse(p.x+4,p.y-4.5,1.5,1.2,0,0,7);ctx.fill()}
-  for(const o of objs)if(o.type==='yarn'&&o.minX!==undefined){ctx.strokeStyle='#ee7f93';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(o.minX,FLOOR-2);for(let x=o.minX;x<=o.maxX;x+=10)ctx.lineTo(x,FLOOR-2+Math.sin(x*.3)*2.5);ctx.stroke()}
+  for(const o of objs)if((o.type==='yarn'||o.type==='tproll')&&o.minX!==undefined){ctx.strokeStyle=o.type==='yarn'?'#ee7f93':'#f5eede';ctx.lineWidth=o.type==='yarn'?2.5:7;ctx.beginPath();ctx.moveTo(o.minX,FLOOR-2);for(let x=o.minX;x<=o.maxX;x+=10)ctx.lineTo(x,FLOOR-2+Math.sin(x*.3)*2.5);ctx.stroke()}
   for(const o of objs)if(o.state==='static'&&!o.att&&!['frame','pan'].includes(o.type)&&!(o.type==='plate'&&!o.up)&&o.y<FLOOR-30){ctx.fillStyle='rgba(20,12,30,.2)';ctx.beginPath();ctx.ellipse(o.x,o.y+o.r,o.r*.9,2.5,0,0,7);ctx.fill()}
   for(const o of objs)drawObj(o);
   if(mode==='play'||mode==='brief'){
@@ -1300,7 +1329,8 @@ function botRound(id,up,li){
   roomId=id;LV=li==null?null:mkLV(id,li);setup();if(!LV)pickMissions();else missions=[];peekTimes=peekPlan();mode='play';tut=null;intro=0;
   const tgt=()=>{if(!LV||goalDone)return null;const ty=LV.type,ob=n=>objs.find(o=>o.type===n&&o.state==='static'&&!o.att);let o=null;
     if(ty==='fan')return FAN&&[FAN.x+rnd(-40,40),FAN.y+12];if(ty==='tree'||ty==='baub')return tree&&!tree.fallen?[tree.bx+rnd(-30,30),FLOOR-rnd(90,200)]:null;
-    if(ty==='curt'||ty==='cloth'||ty==='cables')return curtain.fallen?null:[(CURT.x1+CURT.x2)/2,(CURT.y1+CURT.y2)/2];if(ty==='swing')return[room.swing.x+room.swing.L*Math.sin(swing.th),CEIL+room.swing.L*Math.cos(swing.th)];
+    if(ty==='bounce')return[127+rnd(-50,50),600];if(ty==='ducks'||ty==='splash'||ty==='tp'){o=ob({ducks:'duck',splash:'tap',tp:'tproll'}[ty]);return o?[o.x,o.y]:null}
+    if(ty==='curt'||ty==='cloth'||ty==='cables'||ty==='shower')return curtain.fallen?null:[(CURT.x1+CURT.x2)/2,(CURT.y1+CURT.y2)/2];if(ty==='swing')return[room.swing.x+room.swing.L*Math.sin(swing.th),CEIL+room.swing.L*Math.cos(swing.th)];
     if(ty==='chair')return[345,668];o=ob({paper:'printer',monitor:'monitor',globe:'globe',pans:'pan',plates:'plate',prints:'flour'}[ty]);return o?[o.x,o.y]:null};
   let next=.5,t70=0;const dt=1/120,go=(vx,vy)=>{cat.vx=vx;cat.vy=vy;cat.face=vx<0?-1:1;cat.tx=null;if(cat.state==='ground'&&vy>0)cat.y+=2;cat.state='air';cat.plat=null;cat.cd=.2};
   for(let i=0;i<40000&&mode==='play';i++){
@@ -1308,10 +1338,10 @@ function botRound(id,up,li){
     if(cat.state==='fan'){if(Math.random()<1.2*dt)releaseFan(false)}
     else if(cat.state==='swing'){if(Math.random()<.8*dt)releaseSwing(false)}
     else if(peek&&cat.state==='ground'){cat.tx=null}
-    else if(cat.state==='curtain'&&LV&&!goalDone&&['curt','cloth','cables'].includes(LV.type)){}
+    else if(cat.state==='curtain'&&LV&&!goalDone&&['curt','cloth','cables','shower'].includes(LV.type)){}
     else if(LV&&LV.type==='chair'&&!goalDone&&cat.state==='ground'&&cat.plat&&cat.plat.chair&&(cat.spinT||0)<3.9){}
     else if(next<=0&&canJump()){next=rnd(.8,1.4);
-      if(timeLeft<(BED.p?14:8)||(LV&&goalDone)){const bp=plats[BED.p];if(cat.plat===bp)cat.tx=BED.x;else if(cat.state==='ground'&&cat.plat!==plats[0]&&BED.p===0)go(clamp((BED.x-cat.x)*1.6,-600,600),Math.abs(BED.x-cat.x)<70?200:-320);else{const up=bp.y<cat.y-30;go(clamp((BED.x-cat.x)*(up?1.9:1.6),-650,650),up?-Math.min(vmax(),Math.sqrt(2*G*(cat.y+CR-bp.y+70))):-320)}}
+      if(timeLeft<(BED.p?14:8)||(LV&&goalDone)){const bp=plats[BED.p];if(cat.plat===bp)cat.tx=BED.x;else if(cat.state==='ground'&&cat.plat&&cat.plat.y<bp.y-20&&Math.abs(BED.x-cat.x)<70)go(clamp((BED.x-cat.x)*2,-200,200),200);else if(cat.state==='ground'&&cat.plat!==plats[0]&&BED.p===0)go(clamp((BED.x-cat.x)*1.6,-600,600),Math.abs(BED.x-cat.x)<70?200:-320);else{const up=bp.y<cat.y-30;go(clamp((BED.x-cat.x)*(up?1.9:1.6),-650,650),up?-Math.min(vmax(),Math.sqrt(2*G*(cat.y+CR-bp.y+70))):-320)}}
       else if(Math.random()<.15&&cat.state==='ground'){const pl=cat.plat;cat.tx=pl===plats[0]?rnd(30,450):rnd(pl.x1+8,pl.x2-8)}
       else{const g=tgt();if(g&&Math.random()<.65){const T=rnd(.5,.8);let vx=(g[0]-cat.x)/T,vy=(g[1]-cat.y)/T-.5*G*T;const m=Math.hypot(vx,vy),mx=vmax();if(m>mx){vx*=mx/m;vy*=mx/m}go(vx,vy)}
         else{const v=rnd(500,vmax()),an=rnd(-2.6,-.55);go(Math.cos(an)*v,Math.sin(an)*v)}}}
